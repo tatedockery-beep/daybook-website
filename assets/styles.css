@@ -523,6 +523,9 @@ p { margin: 0 0 1em; }
 .legal h1 { font-size: 2rem; }
 .legal h2 { font-size: 1.25rem; margin-top: 2em; }
 .legal p, .legal li { color: hsl(var(--muted-fg)); font-size: 0.95rem; }
+.legal h3 { font-size: 1rem; margin-top: 1.6em; }
+.legal a { text-decoration: underline; text-underline-offset: 2px; }
+.legal-meta { font-size: 0.85rem; margin-bottom: 32px; }
 .draft-banner {
   background: hsl(var(--status-attention) / 0.12);
   border: 1px solid hsl(var(--status-attention) / 0.35);
@@ -532,6 +535,59 @@ p { margin: 0 0 1em; }
   font-weight: 600;
   font-size: 0.88rem;
   margin-bottom: 32px;
+}
+
+/* Legal — short-version summary card */
+.legal-summary {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-card);
+  padding: 24px 28px;
+  margin: 0 0 40px;
+}
+.legal-summary h2 { margin-top: 0; font-size: 1.05rem; }
+.legal-summary ul { margin: 0; padding-left: 1.2em; }
+.legal-summary li { margin-bottom: 6px; }
+.legal-summary li:last-child { margin-bottom: 0; }
+
+/* Legal — on-this-page index */
+.legal-toc {
+  border-top: 1px solid hsl(var(--border));
+  border-bottom: 1px solid hsl(var(--border));
+  padding: 20px 0;
+  margin: 0 0 40px;
+}
+.legal-toc p { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 10px; }
+.legal-toc ol {
+  list-style: none;
+  margin: 0; padding: 0;
+  columns: 2; column-gap: 32px;
+}
+.legal-toc li { margin-bottom: 6px; break-inside: avoid; font-size: 0.9rem; }
+.legal-toc a { color: hsl(var(--foreground)); text-decoration: none; }
+.legal-toc a:hover { color: hsl(var(--primary)); }
+
+/* Legal — provider table */
+.legal-table-wrap { overflow-x: auto; margin: 0 0 1em; }
+.legal-table {
+  width: 100%; min-width: 30rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.legal-table th, .legal-table td {
+  text-align: left;
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid hsl(var(--border) / 0.7);
+  vertical-align: top;
+  color: hsl(var(--muted-fg));
+}
+.legal-table th { color: hsl(var(--foreground)); font-weight: 600; white-space: nowrap; }
+.legal-table tbody th { font-weight: 500; }
+
+@media (max-width: 560px) {
+  .legal { padding: 40px 0; }
+  .legal-summary { padding: 20px; }
+  .legal-toc ol { columns: 1; }
 }
 
 /* 404 */

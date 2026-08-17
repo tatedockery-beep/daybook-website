@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Privacy Policy — Daybook</title>
-  <meta name="description" content="Daybook privacy policy.">
-  <meta name="robots" content="noindex">
+  <meta name="description" content="What Daybook collects, why, who we share it with, and how to get it out or delete it. Plain English, no data sales, no ad tracking.">
+  <link rel="canonical" href="https://usedaybook.com/privacy/">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,68 +17,200 @@
 <header class="nav">
   <div class="container nav-inner">
     <a class="wordmark" href="/">Daybook<span class="dot">.</span></a>
+    <nav aria-label="Main">
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/terms/">Terms</a></li>
+      </ul>
+    </nav>
     <div class="nav-cta">
       <a class="btn btn-ghost" href="https://app.usedaybook.com">Log in</a>
       <a class="btn btn-primary" href="https://app.usedaybook.com/register">Start free trial</a>
+      <button class="nav-toggle" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
+  </div>
+  <div class="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/pricing/">Pricing</a>
+    <a href="/terms/">Terms</a>
+    <a href="https://app.usedaybook.com">Log in</a>
+    <a class="btn btn-primary" href="https://app.usedaybook.com/register">Start free trial</a>
   </div>
 </header>
 
 <main class="container legal">
-  <div class="draft-banner">DRAFT — pending legal review. This document has not yet been reviewed by an attorney and may change before launch.</div>
 
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: [DATE — set at launch]</p>
+  <p class="muted legal-meta">Effective August 17, 2026 · Daybook is operated by Dockery Systems co LLC, a Texas limited liability company.</p>
 
-  <p>This policy explains what information Daybook ("we", "us") collects when you use our website and our contractor business software (the "Service"), how we use it, and the choices you have.</p>
+  <div class="legal-summary">
+    <h2>The short version</h2>
+    <ul>
+      <li>We don't sell your data, share it with advertisers, or run ad trackers. There is no analytics script on this website and no cookie banner, because there are no cookies to consent to.</li>
+      <li>Your business data belongs to you. You can export all of it as a single file, or delete your account and its data, from Settings — without emailing us for permission.</li>
+      <li>Daybook records technician <strong>hours</strong>. It never calculates or moves anyone's pay, and it stores no Social Security numbers or bank account numbers.</li>
+      <li>Location is captured <strong>only at the moment a technician clocks in</strong>, and only if the business owner turns the shop geofence on. There is no background or continuous location tracking, on or off the clock.</li>
+      <li>Card numbers never touch our servers — Stripe handles payments.</li>
+    </ul>
+  </div>
 
-  <h2>Information you provide</h2>
+  <nav class="legal-toc" aria-label="On this page">
+    <p class="muted">On this page</p>
+    <ol>
+      <li><a href="#whose-data">1. Whose data this covers</a></li>
+      <li><a href="#collect">2. What we collect</a></li>
+      <li><a href="#location">3. Location data</a></li>
+      <li><a href="#dont">4. What we don't collect</a></li>
+      <li><a href="#use">5. How we use it</a></li>
+      <li><a href="#providers">6. Service providers</a></li>
+      <li><a href="#ai">7. AI features</a></li>
+      <li><a href="#technicians">8. If you're a technician</a></li>
+      <li><a href="#security">9. Security</a></li>
+      <li><a href="#controls">10. Your controls</a></li>
+      <li><a href="#retention">11. Retention and deletion</a></li>
+      <li><a href="#website">12. This website</a></li>
+      <li><a href="#mobile">13. The mobile app</a></li>
+      <li><a href="#rights">14. State and regional rights</a></li>
+      <li><a href="#children">15. Children</a></li>
+      <li><a href="#changes">16. Changes</a></li>
+      <li><a href="#contact">17. Contact</a></li>
+    </ol>
+  </nav>
+
+  <p>This policy explains what information Daybook ("we", "us") collects when you use usedaybook.com and our contractor business software (the "Service"), how we use it, who we share it with, and the choices you have.</p>
+
+  <h2 id="whose-data">1. Whose data this covers</h2>
+  <p>Daybook holds two different kinds of information, and your rights differ depending on which one you're asking about.</p>
+
+  <h3>Contractors and their staff — our customers</h3>
+  <p>If you own a contracting business, or work for one that uses Daybook, we hold information about you directly. This policy governs it, and you can exercise the rights in section 10 with us.</p>
+
+  <h3>Homeowners and property owners — your contractor's customers</h3>
+  <p>If a contractor you hired uses Daybook, your name, address, phone number, and job history may live in their Daybook account. In that case <strong>the contractor decides</strong> what goes in, what it's used for, and how long it's kept. We hold and process it on their behalf and don't use it for our own purposes. To correct or remove your information, contact the contractor directly — they can do it themselves in the app. If you can't reach them, email us and we'll help them act on your request.</p>
+
+  <h2 id="collect">2. What we collect</h2>
   <ul>
-    <li><strong>Account information</strong> — your name, email address, business name, trade, and password (stored as a secure hash, never in plain text).</li>
-    <li><strong>Business data</strong> — the content you put into the Service to run your business: clients, leads, estimates, jobs, invoices, payments, employee records, time entries, notes, and photos.</li>
-    <li><strong>Payment information</strong> — subscription billing and customer card payments are processed by Stripe. We do not store full card numbers on our servers.</li>
+    <li><strong>Account information</strong> — your name, email address, business name, trade, business address and phone, and your password (stored only as a bcrypt hash; we cannot read or recover it). If you enable two-factor authentication, we store the secret your authenticator app needs and your backup codes.</li>
+    <li><strong>Business data you enter</strong> — clients, properties, leads, estimates, jobs, schedules, invoices, payments, inventory, your price book, notes, checklists, and to-dos.</li>
+    <li><strong>Employee records</strong> — for each person you add: name, email, phone, job title, login username, pay rate and pay type, and their time entries. Pay rate is stored so we can total the hours on a pay period; see section 4 for what we deliberately don't hold.</li>
+    <li><strong>Photos and files</strong> — job photos taken in the field and files you attach, stored in Amazon S3 in the United States.</li>
+    <li><strong>Property models</strong> — the floor-plan geometry and measurements you draw for a property, plus the areas computed from them.</li>
+    <li><strong>Signatures</strong> — when a customer signs an estimate in person, we store the drawn signature image, the typed name, the exact consent wording shown on screen, a snapshot of the line items and total that were agreed to, the time, and who witnessed it. That record is immutable by design: it's the proof of what was agreed.</li>
+    <li><strong>Addresses and geocoding</strong> — property and business addresses are converted to map coordinates so jobs can be placed on a map and routed.</li>
+    <li><strong>Calls and messages</strong> — if you use a Daybook phone number, we log missed calls (the caller's number, their name where known, and the time) so you can call back. If you turn on the AI phone receptionist, a summary of the call and its duration are saved to that lead or client's history.</li>
+    <li><strong>Notifications</strong> — if you allow push notifications, the device token your phone or browser issues, and your browser's user-agent string.</li>
+    <li><strong>Activity log</strong> — an audit trail of important actions in your account: what was done, by whom, and when. It's there so an owner can answer "who changed this invoice."</li>
+    <li><strong>Technical records</strong> — IP address, request and error logs, kept to run the Service, debug failures, and detect abuse.</li>
   </ul>
 
-  <h2>How we use information</h2>
+  <h2 id="location">3. Location data</h2>
+  <p>This deserves its own section, because field software has a reputation here and we want to be specific.</p>
+  <p>If a business owner turns on the shop geofence, then <strong>at the moment a technician taps clock in</strong> — and only then — Daybook reads the device's coordinates and accuracy, calculates the distance to the shop, and records a verdict of inside or outside the fence. That's the whole feature.</p>
+  <p>Daybook does not run a background location service. It does not record where a technician is between clock-ins, during a job, after clocking out, or on a weekend. There is no breadcrumb trail, no live map of where your people are, and no location captured at clock-out. If the geofence is off, no coordinates are recorded at all.</p>
+
+  <h2 id="dont">4. What we don't collect</h2>
   <ul>
-    <li>To provide and operate the Service.</li>
-    <li>To send transactional email you'd expect — estimate approvals, invoices, password resets, account notices — via our email delivery provider.</li>
-    <li>To store files you upload (such as job photos) with our cloud storage provider.</li>
-    <li>If you use the optional AI features, relevant business data is sent to our AI provider to generate the response you asked for.</li>
+    <li><strong>No Social Security numbers, tax IDs for individuals, bank account numbers, or government-issued ID numbers.</strong> Daybook tracks hours and produces an export for your payroll provider. It never calculates net pay, withholds taxes, or moves money to an employee.</li>
+    <li><strong>No card numbers.</strong> Subscription billing and your customers' card payments are handled by Stripe. Full card details never reach our servers.</li>
+    <li><strong>No advertising or cross-site tracking</strong>, no third-party analytics SDKs, no data brokers, and no sale or sharing of personal information for advertising — not now, and not as a future revenue plan. Daybook is paid for by subscriptions.</li>
+    <li><strong>No background location</strong>, no microphone access, and no access to anything on a technician's phone outside the Daybook app.</li>
   </ul>
 
-  <h2>What we don't do</h2>
+  <h2 id="use">5. How we use it</h2>
   <ul>
-    <li>We do not sell your data.</li>
-    <li>We do not show ads.</li>
-    <li>Your business data is isolated from every other business on the platform — no other customer can access it.</li>
+    <li>To provide and operate the Service, and to keep your account secure.</li>
+    <li>To send transactional email you'd expect — estimate approvals, invoices, review requests you triggered, password resets, and account notices.</li>
+    <li>To send text messages and route phone calls, where you've turned those features on.</li>
+    <li>To send push notifications you've opted into.</li>
+    <li>To bill your subscription and, through Stripe Connect, to pay you the money your customers pay on your invoices.</li>
+    <li>To generate the output you asked for from an optional AI feature (see section 7).</li>
+    <li>To support you when you ask for help, and to investigate abuse or security incidents.</li>
+  </ul>
+  <p>We do not use your business data to build products for anyone else, to benchmark you against other contractors, or to train machine-learning models.</p>
+
+  <h2 id="providers">6. Service providers</h2>
+  <p>We use a small set of infrastructure providers to run the Service. Each receives only what it needs for its function.</p>
+  <div class="legal-table-wrap">
+    <table class="legal-table">
+      <thead>
+        <tr><th scope="col">Provider</th><th scope="col">What it does</th><th scope="col">When</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Stripe</th><td>Subscription billing and your customers' card payments</td><td>Always</td></tr>
+        <tr><th scope="row">Resend</th><td>Transactional email delivery</td><td>Always</td></tr>
+        <tr><th scope="row">Amazon Web Services (S3)</th><td>Photo and file storage</td><td>Always</td></tr>
+        <tr><th scope="row">Railway</th><td>Application, database, and queue hosting</td><td>Always</td></tr>
+        <tr><th scope="row">Twilio</th><td>Your Daybook phone number, call forwarding, and text messages</td><td>If enabled</td></tr>
+        <tr><th scope="row">Anthropic</th><td>The AI behind the optional assistant and writing features</td><td>If used</td></tr>
+        <tr><th scope="row">Vapi</th><td>The optional AI phone receptionist</td><td>If enabled</td></tr>
+        <tr><th scope="row">Mapbox</th><td>Address lookup and type-ahead</td><td>Always</td></tr>
+        <tr><th scope="row">Intuit QuickBooks Online</th><td>Accounting and payroll-hours sync</td><td>Only if you connect it</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Two details worth calling out. Address type-ahead runs through our own server rather than from your browser, so no customer address is ever handed to Mapbox in a URL from your device. And the AI phone receptionist runs on <strong>your own Vapi account</strong>, connected with your own key — your call data goes to your account, not into a shared pool with other Daybook customers.</p>
+
+  <h2 id="ai">7. AI features</h2>
+  <p>The in-app assistant, the AI phone receptionist, and the AI writing helpers are optional. When you use one, the business data relevant to your request — the estimate you're rewriting, the job you're asking about — is sent to our AI provider so it can produce the answer. Under our agreement with them, that content is not used to train their models.</p>
+  <p>We record how many tokens each AI request used and what it cost, per feature, so we can manage capacity and cost. Those usage records contain counts, not the content of the request.</p>
+  <p>AI output can be wrong. Review AI-generated estimates, messages, and summaries before sending them to a customer.</p>
+
+  <h2 id="technicians">8. If you're a technician using Daybook</h2>
+  <p>You didn't choose this software — your employer did. Here's exactly where you stand.</p>
+  <p><strong>Your employer can see:</strong> your clock-in and clock-out times and total hours; the jobs assigned to you and their status; notes, photos, and checklists you record on a job; your to-dos; and, if they've turned the shop geofence on, where you were <em>at the moment you clocked in</em> and how far that was from the shop.</p>
+  <p><strong>Your employer cannot see, through Daybook:</strong> where you are when you're not clocking in; where you go during or after a job; your personal apps, photos, messages, or files; or anything else on your phone. Daybook has no live-tracking map and no way to build one from what it stores.</p>
+  <p>If you have a question about your own record, ask your employer first — they can view and correct it in the app. If that doesn't work, email us and we'll help.</p>
+
+  <h2 id="security">9. Security</h2>
+  <ul>
+    <li>Passwords are hashed with bcrypt. We cannot read them, and nobody at Daybook can tell you what yours is.</li>
+    <li>Session tokens, password-reset links, and customer estimate links are stored as SHA-256 hashes, never as plain text — a stolen copy of the database doesn't yield working links.</li>
+    <li>Two-factor authentication is available on accounts, using an authenticator app plus one-time backup codes.</li>
+    <li>Third-party credentials you connect — QuickBooks tokens, your Vapi key — are encrypted at rest with AES-256-GCM.</li>
+    <li>Every database query is scoped to your business, so no other Daybook customer can reach your data. That rule is enforced in the code and checked automatically on every build; a change that would violate it fails the build rather than shipping.</li>
+    <li>All traffic to the Service is encrypted in transit over HTTPS.</li>
+  </ul>
+  <p>No system is perfectly secure. If we discover a breach affecting your data, we'll notify affected account owners and comply with applicable notification law.</p>
+
+  <h2 id="controls">10. Your controls</h2>
+  <ul>
+    <li><strong>Export</strong> — download your business data as a single archive from Settings, whenever you like. You don't need to ask us, and it isn't gated behind staying subscribed.</li>
+    <li><strong>Deletion</strong> — an owner can delete the account and its data from Settings. Deletion is scheduled with a 30-day grace period during which it can be reversed; after that it's permanent.</li>
+    <li><strong>Access and correction</strong> — view and edit account, business, employee, and customer records directly in the app.</li>
+    <li><strong>Notifications</strong> — choose which email and push notifications you receive in Settings. Transactional messages essential to the Service (password resets, billing notices) can't be turned off while your account is active.</li>
+    <li><strong>Location</strong> — the geofence is off unless a business owner turns it on, and your device's own operating-system permission is a second switch you control.</li>
+    <li><strong>Integrations</strong> — disconnect QuickBooks, Vapi, or Stripe Connect from Settings at any time; disconnecting revokes the stored credentials.</li>
   </ul>
 
-  <h2>Service providers</h2>
-  <p>We use a small number of infrastructure providers to run the Service: payment processing (Stripe), transactional email, cloud file storage, database hosting, and — for optional features — AI processing and voice-call handling. Each receives only what it needs to perform its function.</p>
+  <h2 id="retention">11. Retention and deletion</h2>
+  <p>We keep your data for as long as your account is active. When an owner deletes the account, the data is purged after the 30-day grace period described above.</p>
+  <p>Two things survive that purge. Stripe retains payment and payout records under its own retention rules and financial regulation, and we retain the minimum records we're legally required to keep — such as our own invoicing and tax records for your subscription. Neither includes your customer list, jobs, or photos.</p>
+  <p>Data is stored in the United States.</p>
 
-  <h2>Your rights and controls</h2>
-  <ul>
-    <li><strong>Export</strong> — you can export your business data from the Service's settings at any time.</li>
-    <li><strong>Deletion</strong> — you can delete your account and its data from settings. Deletion is scheduled with a grace period, then permanent.</li>
-    <li><strong>Access &amp; correction</strong> — you can view and edit your account information in the Service.</li>
-  </ul>
+  <h2 id="website">12. This website</h2>
+  <p>usedaybook.com sets no cookies, runs no analytics, and loads no advertising or tracking scripts. That's why you weren't asked to accept anything when you arrived.</p>
+  <p>One disclosure for completeness: the page loads its typeface from Google Fonts, so Google's servers receive your IP address as part of that request. Our own web host receives standard server request logs. Nothing on this site is tied to an identity or used to profile you.</p>
 
-  <h2>Security</h2>
-  <p>Passwords are hashed, access tokens are stored hashed, two-factor authentication is available on accounts, and every request to the Service is scoped to your business.</p>
+  <h2 id="mobile">13. The mobile app</h2>
+  <p>The Daybook iOS app is a login-only app for existing accounts. It stores a working copy of your assigned jobs on the device so the field portal keeps working without signal, and syncs changes when you're back online. Signing out clears that cached copy from the device, as does signing in as a different person.</p>
+  <p>The app requests location permission only for the clock-in geofence described in section 3, and camera and photo permission only when you take or attach a job photo. Decline either and the rest of the app still works.</p>
 
-  <h2>Data retention</h2>
-  <p>We retain your data while your account is active. If you delete your account, your data is permanently removed after the scheduled deletion completes, except where law requires longer retention.</p>
+  <h2 id="rights">14. State and regional rights</h2>
+  <p>Depending on where you live, you may have the right to know what personal information we hold about you, to get a copy of it, to correct it, to delete it, and to not be discriminated against for exercising those rights. Residents of California, Texas, and other states with comprehensive privacy laws have these rights by statute; we extend the same controls to everyone, which is why they're built into Settings rather than into a request form.</p>
+  <p>We do not sell personal information, and we do not share it for cross-context behavioral advertising, so there is nothing to opt out of. We do not use personal information for automated decisions producing legal or similarly significant effects.</p>
+  <p>If you're in Canada, we handle personal information consistently with PIPEDA and you can direct access or correction requests to the contact below.</p>
+  <p>To exercise a right you can't complete in the app, email us at the address in section 17. We'll verify that you are who you say you are — usually by confirming control of the account email — before acting, and we'll respond within the time your law allows. If a request concerns data a contractor holds about you as their customer, see section 1.</p>
 
-  <h2>Children</h2>
-  <p>The Service is for businesses and is not directed to children under 13.</p>
+  <h2 id="children">15. Children</h2>
+  <p>The Service is business software and is not directed to children. We don't knowingly collect personal information from anyone under 13. If you believe a child's information has been entered into Daybook, email us and we'll remove it.</p>
 
-  <h2>Changes</h2>
-  <p>We'll update this page if our practices change, and note the date above.</p>
+  <h2 id="changes">16. Changes</h2>
+  <p>If we change this policy, we'll update the effective date above. For material changes — a new category of data, a new provider that receives your business data, or a new purpose — we'll email account owners before the change takes effect.</p>
 
-  <h2>Contact</h2>
-  <p>Questions? Email <a href="mailto:support@usedaybook.com">support@usedaybook.com</a>.</p>
-  <p>Daybook is operated by Dockery Systems co LLC, a Texas limited liability company.</p>
+  <h2 id="contact">17. Contact</h2>
+  <p>Questions, requests, or a privacy concern: <a href="mailto:support@usedaybook.com">support@usedaybook.com</a>.</p>
+  <p>Daybook is operated by Dockery Systems co LLC, a Texas limited liability company. See also our <a href="/terms/">Terms of Service</a>.</p>
 </main>
 
 <footer class="footer">
@@ -96,5 +228,6 @@
   </div>
 </footer>
 
+<script src="/assets/site.js" defer></script>
 </body>
 </html>

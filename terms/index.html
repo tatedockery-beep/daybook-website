@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Terms of Service — Daybook</title>
-  <meta name="description" content="Daybook terms of service.">
-  <meta name="robots" content="noindex">
+  <meta name="description" content="The agreement between you and Daybook: what you get, what it costs, when the bill can change, what happens if you stop paying, and how to leave with your data.">
+  <link rel="canonical" href="https://usedaybook.com/terms/">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,58 +17,179 @@
 <header class="nav">
   <div class="container nav-inner">
     <a class="wordmark" href="/">Daybook<span class="dot">.</span></a>
+    <nav aria-label="Main">
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+      </ul>
+    </nav>
     <div class="nav-cta">
       <a class="btn btn-ghost" href="https://app.usedaybook.com">Log in</a>
       <a class="btn btn-primary" href="https://app.usedaybook.com/register">Start free trial</a>
+      <button class="nav-toggle" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
+  </div>
+  <div class="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/pricing/">Pricing</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="https://app.usedaybook.com">Log in</a>
+    <a class="btn btn-primary" href="https://app.usedaybook.com/register">Start free trial</a>
   </div>
 </header>
 
 <main class="container legal">
-  <div class="draft-banner">DRAFT — pending legal review. This document has not yet been reviewed by an attorney and may change before launch.</div>
 
   <h1>Terms of Service</h1>
-  <p class="muted">Last updated: [DATE — set at launch]</p>
+  <p class="muted legal-meta">Effective August 17, 2026 · Daybook is operated by Dockery Systems co LLC, a Texas limited liability company.</p>
 
-  <h2>1. The Service</h2>
-  <p>Daybook is business software for contractors: client management, estimates, job scheduling, a field portal for technicians, invoicing, payments, and related tools. These terms govern your use of the Service.</p>
+  <div class="legal-summary">
+    <h2>The short version</h2>
+    <ul>
+      <li><strong>Your bill never goes up on its own.</strong> Moving to a bigger plan requires an owner to confirm it after seeing the exact price. Nothing in the system can raise what you pay without that click.</li>
+      <li>Every plan includes every feature. You're priced on how many people can log in, never on what they're allowed to do, and never per head.</li>
+      <li>14-day free trial, no credit card. Cancel anytime; cancelling stops future billing.</li>
+      <li>Your data is yours. Export all of it whenever you like — including after you stop paying.</li>
+      <li>We take <strong>0%</strong> of the money your customers pay you. Stripe's own processing fee is the only cut, and it's Stripe's.</li>
+    </ul>
+  </div>
 
-  <h2>2. Your account</h2>
-  <p>You're responsible for your account credentials and for the people you invite to your business (office staff and technicians). Keep your login safe; two-factor authentication is available and recommended.</p>
+  <nav class="legal-toc" aria-label="On this page">
+    <p class="muted">On this page</p>
+    <ol>
+      <li><a href="#service">1. The Service</a></li>
+      <li><a href="#account">2. Your account and your people</a></li>
+      <li><a href="#trial">3. Free trial</a></li>
+      <li><a href="#pricing">4. Plans and billing</a></li>
+      <li><a href="#bill-changes">5. When your bill changes</a></li>
+      <li><a href="#lapse">6. Cancelling, and not paying</a></li>
+      <li><a href="#your-data">7. Your data</a></li>
+      <li><a href="#customer-payments">8. Payments from your customers</a></li>
+      <li><a href="#estimates">9. Estimates and signatures</a></li>
+      <li><a href="#acceptable-use">10. Acceptable use</a></li>
+      <li><a href="#ai">11. AI features</a></li>
+      <li><a href="#app">12. The mobile app</a></li>
+      <li><a href="#availability">13. Availability and changes</a></li>
+      <li><a href="#warranty">14. Warranties</a></li>
+      <li><a href="#liability">15. Limitation of liability</a></li>
+      <li><a href="#indemnity">16. Indemnity</a></li>
+      <li><a href="#termination">17. Termination</a></li>
+      <li><a href="#law">18. Governing law</a></li>
+      <li><a href="#changes">19. Changes to these terms</a></li>
+      <li><a href="#contact">20. Contact</a></li>
+    </ol>
+  </nav>
 
-  <h2>3. Trial and billing</h2>
-  <p>New accounts start with a 14-day free trial that doesn't require a credit card. After the trial, continued use requires an active subscription, billed monthly through Stripe. You can cancel anytime; cancellation stops future billing.</p>
+  <p>These terms are the agreement between you and Dockery Systems co LLC ("Daybook", "we", "us") covering your use of the Daybook website, web application, and mobile app (together, the "Service"). By creating an account or using the Service, you agree to them. If you're agreeing on behalf of a business, you're confirming you have authority to bind it.</p>
 
-  <h2>4. Your data</h2>
-  <p>The business data you put into Daybook belongs to you. You can export it from settings, and you can delete your account and its data from settings. We process your data only to provide the Service, as described in our <a href="/privacy/">Privacy Policy</a>.</p>
+  <h2 id="service">1. The Service</h2>
+  <p>Daybook is business software for residential contractors: clients and properties, leads, estimates, job scheduling, a field portal for technicians, time tracking, invoicing, payments, inventory, and related tools. It has two sides — an office side for owners and staff, and a technician side for field workers.</p>
+  <p>Daybook is a tool you use to run your business. We don't perform contracting work, don't supervise your employees, and aren't a party to any agreement between you and your customers.</p>
 
-  <h2>5. Payments to you</h2>
-  <p>Customer card payments on your invoices are processed by Stripe. Stripe's own terms and processing fees apply to those transactions. Daybook is not a party to the transaction between you and your customer.</p>
+  <h2 id="account">2. Your account and your people</h2>
+  <p>You're responsible for your account credentials, for the people you invite, and for what they do in your account. Keep logins private. Two-factor authentication is available and recommended for owners and office staff.</p>
+  <p>A <strong>seat</strong> is one person who can sign in to your account, counted once — office or field, owner or technician. Invitations that haven't been accepted don't count, and neither do people you've suspended or removed. Someone becomes a seat the moment their access goes live, and stops being one when you remove it.</p>
+  <p>You may not share one login among several people to avoid seats. Beyond the billing question, shared logins break the record of who did what, which is the point of the audit trail.</p>
 
-  <h2>6. Acceptable use</h2>
-  <p>Don't use the Service to break the law, to send spam, to infringe others' rights, or to attempt to access another business's data. We may suspend accounts that do.</p>
+  <h2 id="trial">3. Free trial</h2>
+  <p>New accounts get 14 days of full access, with no credit card required up front. Nothing is charged during the trial and nothing charges automatically at the end of it — if you don't subscribe, the account moves to read-only rather than billing you. See section 6 for exactly what read-only means.</p>
 
-  <h2>7. AI features</h2>
-  <p>Optional AI features (the in-app assistant and the phone receptionist) generate content automatically. Review AI-generated estimates, messages, and summaries before relying on them — you're responsible for what you send to your customers.</p>
+  <h2 id="pricing">4. Plans and billing</h2>
+  <p>Daybook is priced by the size of your company, in bands:</p>
+  <div class="legal-table-wrap">
+    <table class="legal-table">
+      <thead>
+        <tr><th scope="col">Plan</th><th scope="col">Seats</th><th scope="col">Monthly</th><th scope="col">Annual</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Solo</th><td>1–2</td><td>$49</td><td>$490</td></tr>
+        <tr><th scope="row">Crew</th><td>3–10</td><td>$99</td><td>$990</td></tr>
+        <tr><th scope="row">Shop</th><td>11–25</td><td>$149</td><td>$1,490</td></tr>
+        <tr><th scope="row">Fleet</th><td>26+</td><td>$229</td><td>$2,290</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Annual is always ten times the monthly price, so paying yearly is two months free. The <a href="/pricing/">pricing page</a> is the canonical current price list; if it and this table ever disagree, the pricing page governs.</p>
+  <p>Two commitments about how this works, which we consider part of the deal and not just a marketing position:</p>
+  <ul>
+    <li><strong>Every band includes every feature.</strong> A band is a price label. We don't gate functionality by plan, and there is no upsell inside the product for a capability another customer has.</li>
+    <li><strong>Never per head.</strong> Adding a person inside your current band costs nothing. Your price only moves when your headcount crosses a band boundary.</li>
+  </ul>
+  <p>Subscriptions are billed in advance through Stripe on the interval you choose, and renew automatically until cancelled. Prices are exclusive of any sales tax we're required to collect.</p>
 
-  <h2>8. Availability and changes</h2>
-  <p>We work to keep the Service available and improving, but it's provided "as is" without warranties of uninterrupted operation. We may add, change, or remove features.</p>
+  <h2 id="bill-changes">5. When your bill changes</h2>
+  <p>This section exists because surprise upcharges are the most common complaint about software in this category, and we've built the opposite behavior into the product rather than promising it in prose.</p>
+  <h3>Going up — never automatic</h3>
+  <p>When you try to add a person who would push you past your band's seat limit, Daybook <strong>blocks the invitation</strong> and tells you the exact price of the next band. An owner then confirms the upgrade. Only that confirmation changes your subscription. Our own background reconciliation, which keeps Stripe in step with your account, is deliberately not permitted to raise a bill under any circumstance — if it finds a mismatch that would cost you more, it leaves it alone and waits for a human.</p>
+  <p>The practical consequence, stated plainly: you can hit a wall when hiring. We think a wall you can see is better than an invoice you can't.</p>
+  <h3>Going down — automatic, at renewal</h3>
+  <p>If your headcount falls into a cheaper band, the lower price takes effect from your next invoice, without you asking. There's no mid-cycle refund for the period already paid, and a downgrade never needs your confirmation, because it only ever lowers what you pay.</p>
 
-  <h2>9. Limitation of liability</h2>
-  <p>To the maximum extent permitted by law, Daybook's liability for any claim relating to the Service is limited to the amount you paid us in the twelve months before the claim arose.</p>
+  <h2 id="lapse">6. Cancelling, and not paying</h2>
+  <p>You can cancel at any time from Settings. Cancelling stops future billing; it doesn't refund the current period, and you keep full access until that period ends.</p>
+  <p>If the trial ends without a subscription, or a payment fails, access degrades in steps rather than switching off:</p>
+  <ul>
+    <li><strong>Full access</strong> — during the trial, while subscribed, and for the first 7 days after a failed payment, so a declined card doesn't stop your Tuesday.</li>
+    <li><strong>Read-only</strong> — after an unsubscribed trial ends, and from day 8 to day 30 of a failed payment. You can still see everything, finish work already in flight by editing existing jobs, estimates, and invoices, and export all your data. You can't create new records or change settings.</li>
+    <li><strong>Locked</strong> — after 30 days unpaid, or if the subscription is cancelled or terminated at Stripe. Billing and account pages stay reachable so you can pay and restore access.</li>
+  </ul>
+  <p>At no point in that ladder do we delete your business data for non-payment. Getting your data out is not gated behind being a paying customer.</p>
 
-  <h2>10. Termination</h2>
-  <p>You can stop using the Service and delete your account at any time. We may terminate accounts that violate these terms.</p>
+  <h2 id="your-data">7. Your data</h2>
+  <p>The business data you put into Daybook belongs to you. We process it to provide the Service, as described in our <a href="/privacy/">Privacy Policy</a>. We don't sell it, don't use it to train models, and don't use it to build products for anyone else.</p>
+  <p>You can export all of it as a single archive from Settings at any time, without asking us. An owner can delete the account and its data from Settings; deletion is scheduled with a 30-day window during which it can be reversed, then it's permanent.</p>
+  <p>You're responsible for having the right to put the data you enter into Daybook — in particular your customers' information — and for handling it lawfully. Where Daybook holds information about your customers, you decide what goes in and how long it stays; see section 1 of the Privacy Policy.</p>
 
-  <h2>11. Governing law</h2>
-  <p>These terms are governed by the laws of the State of Texas, without regard to its conflict-of-law rules.</p>
+  <h2 id="customer-payments">8. Payments from your customers</h2>
+  <p>When your customers pay an invoice by card, the charge is made through Stripe onto your own connected Stripe account. <strong>Daybook takes 0% of it</strong> — we add no platform fee and no per-transaction cut. Stripe's processing fee applies and is Stripe's own, under your agreement with them.</p>
+  <p>Money moves between your customer, Stripe, and you. We are not a party to that transaction, don't hold your funds, and aren't responsible for chargebacks, disputes, payout timing, or Stripe's decisions about your account. Stripe's terms govern your Stripe account.</p>
 
-  <h2>12. Changes to these terms</h2>
-  <p>If we make material changes, we'll notify account owners by email and update the date above.</p>
+  <h2 id="estimates">9. Estimates and signatures</h2>
+  <p>Daybook can capture a customer's signature on an estimate in person, or an approval by email link. Either way the record binds to the <em>exact</em> scope and total the customer saw: the line items, the amount, and the consent wording are stored as an immutable snapshot at the moment of signing.</p>
+  <p>Consequently, if you change the scope or the price of an approved estimate, the approval is automatically voided and the estimate returns to a revised state needing a fresh approval. Edits that don't touch scope or price — internal notes, for instance — leave the approval intact. This is deliberate and can't be switched off: an approval that survived a price change wouldn't be worth anything.</p>
+  <p>The agreement recorded is between you and your customer. Daybook stores the evidence; we don't guarantee its legal sufficiency in your jurisdiction, and you should confirm that the consent wording meets your needs.</p>
 
-  <h2>13. Contact</h2>
+  <h2 id="acceptable-use">10. Acceptable use</h2>
+  <p>Don't use the Service to break the law, to send spam or messages the recipient didn't agree to receive, to infringe anyone's rights, to reverse-engineer or resell the Service, to probe or interfere with its security, or to attempt to reach another business's data. We may suspend accounts that do, and we'll tell you why.</p>
+  <p>If you use the calling, texting, or review-request features, you're responsible for complying with the rules that govern them — including consent requirements for automated calls and texts.</p>
+
+  <h2 id="ai">11. AI features</h2>
+  <p>The in-app assistant, AI phone receptionist, and AI writing helpers are optional and off unless you turn them on. They generate content automatically and they can be wrong. Review AI-generated estimates, messages, prices, and summaries before relying on them or sending them to a customer — what goes out under your business's name is your responsibility.</p>
+  <p>Daybook's measurement and takeoff tools, including property models, produce estimates of quantity for pricing purposes. They are not engineering calculations, and Daybook does not size equipment or perform load calculations. Professional judgment and any required licensed design remain yours.</p>
+
+  <h2 id="app">12. The mobile app</h2>
+  <p>The Daybook mobile app is a companion for existing accounts — you sign up and manage your subscription on the web, and sign in on the app. Your use of the app is also subject to the app store's own terms. Apple and Google are not parties to this agreement and have no obligation to support the Service.</p>
+
+  <h2 id="availability">13. Availability and changes</h2>
+  <p>We work to keep the Service available and improving. We may add, change, or remove features, and we'll give notice of material removals to account owners by email. We may perform maintenance that briefly interrupts access. We don't promise uninterrupted or error-free operation, and we don't currently offer a contractual uptime guarantee.</p>
+
+  <h2 id="warranty">14. Warranties</h2>
+  <p>The Service is provided "as is" and "as available". To the maximum extent permitted by law, we disclaim all warranties, express or implied, including merchantability, fitness for a particular purpose, and non-infringement. Some jurisdictions don't allow certain disclaimers, in which case they apply to you only to the extent permitted.</p>
+
+  <h2 id="liability">15. Limitation of liability</h2>
+  <p>To the maximum extent permitted by law, neither party is liable for indirect, incidental, special, consequential, or punitive damages, or for lost profits, lost revenue, or lost data, arising from these terms or the Service.</p>
+  <p>To the maximum extent permitted by law, our total liability for all claims relating to the Service is limited to the amount you paid us in the twelve months before the claim arose.</p>
+  <p>Nothing here limits liability that cannot be limited by law.</p>
+
+  <h2 id="indemnity">16. Indemnity</h2>
+  <p>You'll defend and indemnify us against third-party claims arising from your use of the Service in breach of these terms, from the data you put into it, or from the work you perform for your customers.</p>
+
+  <h2 id="termination">17. Termination</h2>
+  <p>You can stop using the Service and delete your account at any time. We may suspend or terminate an account that breaches these terms, that we're required to terminate by law, or that poses a security risk to the platform. Except where the law or a security threat requires immediate action, we'll give you notice and a chance to fix the problem first.</p>
+  <p>If we terminate your account for reasons other than a breach by you, we'll refund the unused portion of any prepaid period. On termination, sections 7, 14, 15, 16, and 18 survive.</p>
+
+  <h2 id="law">18. Governing law</h2>
+  <p>These terms are governed by the laws of the State of Texas, without regard to its conflict-of-law rules. The state and federal courts located in Texas have exclusive jurisdiction over disputes, and both parties consent to venue there.</p>
+  <p>Before filing anything, email us — most problems are a misunderstanding and get solved in a day.</p>
+
+  <h2 id="changes">19. Changes to these terms</h2>
+  <p>We may update these terms. For material changes we'll email account owners at least 30 days before they take effect, and update the date at the top. Continuing to use the Service after that means you accept the new terms. If you don't, cancel before they take effect and we'll refund the unused portion of any prepaid period.</p>
+  <p>We won't apply a price increase to a period you've already paid for.</p>
+
+  <h2 id="contact">20. Contact</h2>
   <p><a href="mailto:support@usedaybook.com">support@usedaybook.com</a></p>
-  <p>The Service is operated by Dockery Systems co LLC, a Texas limited liability company.</p>
+  <p>The Service is operated by Dockery Systems co LLC, a Texas limited liability company. See also our <a href="/privacy/">Privacy Policy</a>.</p>
 </main>
 
 <footer class="footer">
@@ -86,5 +207,6 @@
   </div>
 </footer>
 
+<script src="/assets/site.js" defer></script>
 </body>
 </html>

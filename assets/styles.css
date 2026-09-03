@@ -122,6 +122,39 @@ p { margin: 0 0 1em; }
 
 .btn-lg { padding: 16px 32px; font-size: 1.06rem; }
 
+/* ── App store links ─────────────────────────────────────────────── */
+.store-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.btn-store {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 170px;
+  padding: 10px 22px;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-button);
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  line-height: 1.25;
+  transition: transform var(--duration-fast) var(--ease-out),
+              background-color var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+}
+.btn-store:hover {
+  text-decoration: none;
+  background: hsl(var(--card-2));
+  border-color: hsl(var(--muted-fg));
+}
+.btn-store:active { transform: scale(0.97); }
+.store-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-fg));
+}
+.store-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+.store-links.center { justify-content: center; }
+@media (max-width: 430px) { .btn-store { flex: 1 1 100%; } }
+
 /* ── Sticky glass nav ────────────────────────────────────────────── */
 .nav {
   position: sticky;

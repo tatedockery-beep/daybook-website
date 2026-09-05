@@ -286,6 +286,20 @@ p { margin: 0 0 1em; }
 .feature-copy ul { padding-left: 1.2em; color: hsl(var(--muted-fg)); margin: 0; }
 .feature-copy li { margin-bottom: 6px; }
 
+/* ── Product photography ─────────────────────────────────────────── */
+.shot { margin: 0; max-width: 540px; margin-inline: auto; }
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-3);
+}
+/* Stacked layout: keep the portrait shots from eating the whole screen. */
+@media (max-width: 900px) {
+  .shot { max-width: 400px; }
+}
+
 /* ── Stylized product mockups (pure CSS, generic data) ───────────── */
 .mock {
   background: hsl(var(--card));

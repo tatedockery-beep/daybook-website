@@ -51,3 +51,59 @@ if (!reduced && 'IntersectionObserver' in window) {
 } else {
   document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
 }
+
+// Signup source — how a visitor found Daybook, carried to the signup page.
+//
+// Nothing leaves the browser from here: no network call, no cookie. The campaign
+// tags this visit arrived with (utm_*) and the NAME of the site that sent it —
+// never that page's address — are remembered in this tab only, and added to every
+// "Start free trial" link. The app stores them only if the visitor creates an
+// account. See /privacy/ sections 2 and 12.
+//
+// The forwarding is the whole point: once a visitor clicks through, the signup
+// page's own referrer is usedaybook.com, so the Facebook post that sent them here
+// is invisible to the app unless this page passes it on as `ref`.
+//
+// These parameter names are a contract with the app — Contractor-OS
+// apps/web/src/lib/signup-attribution.ts reads exactly utm_* and ref.
+(() => {
+  const KEY = 'daybook.signup-source';
+  const TAGS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  const SIGNUP = 'https://app.usedaybook.com/register';
+
+  const params = new URLSearchParams(location.search);
+  const fresh = {};
+  TAGS.forEach((name) => {
+    const value = (params.get(name) || '').trim();
+    if (value) fresh[name] = value.slice(0, 200);
+  });
+
+  let host = '';
+  try {
+    host = document.referrer ? new URL(document.referrer).hostname : '';
+  } catch (e) {
+    host = '';
+  }
+  // A page on this site (or the app) is moving around, not a source.
+  const ours = host === 'usedaybook.com' || host.endsWith('.usedaybook.com') || host === location.hostname;
+  if (host && !ours) fresh.ref = host;
+
+  let source = null;
+  if (Object.keys(fresh).length > 0) {
+    source = fresh; // A new arrival replaces an earlier one in this tab.
+    try { sessionStorage.setItem(KEY, JSON.stringify(fresh)); } catch (e) { /* storage blocked — this page still forwards */ }
+  } else {
+    try { source = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { source = null; }
+  }
+  if (!source || typeof source !== 'object') return;
+
+  document.querySelectorAll(`a[href^="${SIGNUP}"]`).forEach((link) => {
+    const url = new URL(link.href);
+    Object.keys(source).forEach((name) => {
+      if ((TAGS.includes(name) || name === 'ref') && typeof source[name] === 'string' && source[name]) {
+        url.searchParams.set(name, source[name]);
+      }
+    });
+    link.href = url.toString();
+  });
+})();

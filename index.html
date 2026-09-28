@@ -330,31 +330,45 @@
         <h2>Priced by your size. Not by your features.</h2>
         <p class="muted">Every size runs the same software. Never billed per tech.</p>
       </div>
-      <div class="grid-4 reveal stagger">
-        <div class="card band">
+      <div class="billing-toggle-wrap">
+        <div class="billing-toggle" role="group" aria-label="Billing period">
+          <button type="button" class="billing-opt" data-billing="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" class="billing-opt" data-billing="annual" aria-pressed="false">Annual <span class="billing-badge">2 months free</span></button>
+        </div>
+      </div>
+      <div class="grid-4 bands reveal stagger">
+        <div class="card band" data-price-monthly="49" data-price-annual="490">
           <span class="band-name">Solo</span>
           <span class="band-seats">1–2 people</span>
-          <div class="band-price">$49<span class="per"> /mo</span></div>
+          <div class="band-price"><span class="band-amt">$49</span><span class="per"> /mo</span></div>
           <div class="band-annual">or $490/year</div>
+          <p class="band-incl">Everything included</p>
+          <a class="btn btn-ghost band-cta" href="https://app.usedaybook.com/register">Start free trial</a>
         </div>
-        <div class="card band featured">
+        <div class="card band featured" data-price-monthly="99" data-price-annual="990">
           <span class="band-tag">Most crews</span>
           <span class="band-name">Crew</span>
           <span class="band-seats">3–10 people</span>
-          <div class="band-price">$99<span class="per"> /mo</span></div>
+          <div class="band-price"><span class="band-amt">$99</span><span class="per"> /mo</span></div>
           <div class="band-annual">or $990/year</div>
+          <p class="band-incl">Everything included</p>
+          <a class="btn btn-primary band-cta" href="https://app.usedaybook.com/register">Start free trial</a>
         </div>
-        <div class="card band">
+        <div class="card band" data-price-monthly="149" data-price-annual="1490">
           <span class="band-name">Shop</span>
           <span class="band-seats">11–25 people</span>
-          <div class="band-price">$149<span class="per"> /mo</span></div>
+          <div class="band-price"><span class="band-amt">$149</span><span class="per"> /mo</span></div>
           <div class="band-annual">or $1,490/year</div>
+          <p class="band-incl">Everything included</p>
+          <a class="btn btn-ghost band-cta" href="https://app.usedaybook.com/register">Start free trial</a>
         </div>
-        <div class="card band">
+        <div class="card band" data-price-monthly="229" data-price-annual="2290">
           <span class="band-name">Fleet</span>
           <span class="band-seats">26+ people</span>
-          <div class="band-price">$229<span class="per"> /mo</span></div>
+          <div class="band-price"><span class="band-amt">$229</span><span class="per"> /mo</span></div>
           <div class="band-annual">or $2,290/year</div>
+          <p class="band-incl">Everything included</p>
+          <a class="btn btn-ghost band-cta" href="https://app.usedaybook.com/register">Start free trial</a>
         </div>
       </div>
       <div class="band-note reveal">

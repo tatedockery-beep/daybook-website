@@ -363,17 +363,6 @@ p { margin: 0 0 1em; }
 .dot-complete { background: hsl(var(--status-complete)); }
 .dot-attention { background: hsl(var(--status-attention)); }
 
-.mock-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
-.mock-kpi {
-  background: hsl(var(--card-2));
-  border: 1px solid hsl(var(--border) / 0.6);
-  border-radius: var(--radius-input);
-  padding: 12px;
-}
-.mock-kpi .label { font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: hsl(var(--muted-fg)); }
-.mock-kpi .value { font-size: 1.25rem; font-weight: 700; margin-top: 2px; }
-.mock-kpi .value.orange { color: hsl(var(--primary)); }
-
 .mock-offline {
   display: flex; align-items: center; gap: 8px;
   background: hsl(var(--status-attention) / 0.12);
@@ -681,9 +670,90 @@ p { margin: 0 0 1em; }
   .section { padding: 52px 0; }
   .hero-ctas .btn { width: 100%; text-align: center; }
   .nav-cta .btn-primary { padding: 9px 14px; font-size: 0.85rem; }
-  .mock-kpis { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .mock-kpi { padding: 8px; }
-  .mock-kpi .value { font-size: 1rem; }
+}
+
+/* ── hero-shots ──────────────── */
+/* The hero's right column: the real product photo, framed. Height is tied to
+   the viewport so headline, CTA and photo share the first screen on a laptop. */
+.hero-shot {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  justify-self: center;
+  width: clamp(300px, calc((100vh - 240px) * 0.8), 440px);
+  width: clamp(300px, calc((100svh - 240px) * 0.8), 440px);
+  max-width: 100%;
+}
+/* Warm glow behind the phone. */
+.hero-shot::before {
+  content: "";
+  position: absolute;
+  inset: 8% 0 4%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, hsl(var(--primary) / 0.32), hsl(var(--primary) / 0.1) 55%, transparent);
+  filter: blur(36px);
+  pointer-events: none;
+}
+.hero-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1040 / 1300;
+  object-fit: cover;
+  object-position: 50% 0;
+  border-radius: 28px;
+  box-shadow:
+    0 0 0 1px hsl(var(--primary) / 0.22),
+    0 2px 6px hsl(222 40% 4% / 0.35),
+    0 24px 48px -12px hsl(222 40% 4% / 0.65),
+    0 48px 96px -24px hsl(222 40% 4% / 0.7);
+}
+/* Floating "glass" job card, echoing the photo's first row of Today. */
+.hero-chip {
+  position: absolute;
+  left: -28px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100% + 12px);
+  padding: 11px 14px;
+  border-radius: var(--radius-input);
+  background: hsl(var(--card) / 0.72);
+  border: 1px solid hsl(0 0% 100% / 0.1);
+  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(140%);
+  backdrop-filter: blur(var(--blur-glass)) saturate(140%);
+  box-shadow: 0 16px 36px -8px hsl(222 40% 4% / 0.7), inset 0 1px 0 hsl(0 0% 100% / 0.06);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+.hero-chip-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex: none;
+  background: hsl(var(--status-active));
+  box-shadow: 0 0 0 4px hsl(var(--status-active) / 0.2);
+}
+.hero-chip-text { display: flex; flex-direction: column; min-width: 0; }
+.hero-chip-title { font-weight: 600; color: hsl(var(--foreground)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hero-chip-sub { color: hsl(var(--muted-fg)); font-size: 0.72rem; white-space: nowrap; }
+.hero-chip .pill { flex: none; }
+
+@media (max-width: 900px) {
+  /* Stacked: crop the portrait to the dashboard's KPI cards so it doesn't push
+     the rest of the page a full screen down. */
+  .hero-shot { width: 400px; }
+  .hero-shot img { aspect-ratio: 1040 / 1120; border-radius: 24px; }
+  /* Straddle the bottom edge so the chip covers no dashboard numbers. */
+  .hero-shot { margin-bottom: 22px; }
+  .hero-chip { left: -20px; bottom: -22px; }
+}
+@media (max-width: 560px) {
+  .hero-shot { width: min(360px, 100%); }
+  /* Crop just below the "This month" card; the chip would only crowd here. */
+  .hero-shot { margin-bottom: 0; }
+  .hero-shot img { aspect-ratio: 1040 / 1060; border-radius: 22px; }
+  .hero-shot::before { inset: 6% 0 0; filter: blur(28px); }
+  .hero-chip { display: none; }
 }
 
 /* ── pricing ──────────────── */

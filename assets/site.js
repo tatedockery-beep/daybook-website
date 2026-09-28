@@ -107,3 +107,50 @@ if (!reduced && 'IntersectionObserver' in window) {
     link.href = url.toString();
   });
 })();
+
+// ── Pricing: monthly / annual toggle ───────────────────────────────────
+//
+// Prices live on each band as data-price-monthly / data-price-annual (whole
+// dollars); this block only formats them. Without JavaScript the markup already
+// shows monthly prices with the yearly price as a sub-line, and the toggle stays
+// hidden (CSS shows it only under html.js). The choice lasts for this page view.
+(() => {
+  const toggles = document.querySelectorAll('.billing-toggle');
+  if (!toggles.length) return;
+
+  const money = (n, cents) =>
+    '$' + n.toLocaleString('en-US', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 });
+
+  toggles.forEach((group) => {
+    const scope = group.closest('.container') || document;
+    const bands = [...scope.querySelectorAll('.band[data-price-monthly][data-price-annual]')];
+    const buttons = [...group.querySelectorAll('.billing-opt[data-billing]')];
+    // Remember the markup's own monthly sub-line so Monthly restores it exactly.
+    bands.forEach((band) => {
+      const sub = band.querySelector('.band-annual');
+      if (sub) band.dataset.subMonthly = sub.textContent;
+    });
+
+    const show = (period) => {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.billing === period)));
+      bands.forEach((band) => {
+        const monthly = Number(band.dataset.priceMonthly);
+        const annual = Number(band.dataset.priceAnnual);
+        const amt = band.querySelector('.band-amt');
+        const per = band.querySelector('.band-price .per');
+        const sub = band.querySelector('.band-annual');
+        if (period === 'annual') {
+          if (amt) amt.textContent = money(annual, false);
+          if (per) per.textContent = ' /yr';
+          if (sub) sub.textContent = money(Math.round((annual / 12) * 100) / 100, true) + '/mo · two months free';
+        } else {
+          if (amt) amt.textContent = money(monthly, false);
+          if (per) per.textContent = ' /mo';
+          if (sub) sub.textContent = band.dataset.subMonthly || '';
+        }
+      });
+    };
+
+    buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.billing)));
+  });
+})();

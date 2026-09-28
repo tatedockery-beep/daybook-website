@@ -685,3 +685,89 @@ p { margin: 0 0 1em; }
   .mock-kpi { padding: 8px; }
   .mock-kpi .value { font-size: 1rem; }
 }
+
+/* ── pricing ──────────────── */
+/* Monthly / Annual toggle — hidden unless JS is running (site.js drives it). */
+.billing-toggle-wrap { display: none; justify-content: center; margin: 0 0 30px; }
+html.js .billing-toggle-wrap { display: flex; }
+.billing-toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.8);
+  border-radius: 99px;
+  box-shadow: var(--shadow-1);
+}
+.billing-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: hsl(var(--muted-fg));
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out);
+}
+.billing-opt:hover { color: hsl(var(--foreground)); }
+.billing-opt[aria-pressed="true"] {
+  background: hsl(var(--card-2));
+  color: hsl(var(--foreground));
+  box-shadow: inset 0 0 0 1px hsl(var(--border)), var(--shadow-1);
+}
+.billing-opt:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+.billing-badge {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: hsl(var(--primary) / 0.16);
+  color: hsl(var(--primary));
+  white-space: nowrap;
+}
+
+/* Bands: equal height; the "included" line + CTA sit together at the bottom. */
+.bands { align-items: stretch; }
+.bands .band { height: 100%; }
+.band-price .band-amt { font-variant-numeric: tabular-nums; }
+.bands .band-annual { min-height: 1.3em; margin-bottom: 18px; }
+.band-incl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: auto 0 20px;
+  padding-top: 16px;
+  border-top: 1px solid hsl(var(--border) / 0.7);
+  font-size: 0.85rem;
+  color: hsl(var(--foreground) / 0.85);
+}
+.band-incl::before {
+  content: "";
+  flex: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: hsl(var(--status-complete) / 0.2)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346b37d' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 9px no-repeat;
+}
+.band-cta {
+  width: 100%;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 430px) {
+  .billing-opt { padding: 9px 14px; }
+}
+
+/* 404 — footer sits at the bottom of a short page. */
+body.page-404 { min-height: 100vh; display: flex; flex-direction: column; }
+body.page-404 main { flex: 1 0 auto; }

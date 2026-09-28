@@ -10,13 +10,14 @@ one stylesheet, one small JS file. Matches the Daybook app's design tokens
 - `/privacy/`, `/terms/` — legal drafts (watermarked "pending legal review")
 - `404.html`
 
-## Placeholders to fill before launch
-1. **Price** — both pricing cards show `$X /month`; search for `$X` in
-   `index.html` and `pricing/index.html`.
-2. **Legal** — `[DATE]`, `[LEGAL ENTITY NAME...]` in privacy/terms; have an
-   attorney review, then remove the `draft-banner` div.
-3. **Mockup → screenshots** — the CSS product mockups (`.mock` blocks) can be
-   swapped for real app screenshots whenever you want.
+## Keep in sync
+- **Prices** appear in three places: the home page pricing bands, `/pricing/`,
+  and the price table in `/terms/` (which defers to `/pricing/`). Change all three together.
+- **Mockups** — the remaining CSS product mockups (`.mock` blocks) can be
+  swapped for real app screenshots whenever you want.
+- **Scroll reveal** — `.reveal` only hides content when `<html>` has the `js`
+  class, set by an inline script in each page's `<head>`. A new page that uses
+  `.reveal` needs that one-line script too.
 
 ## Local preview
 ```

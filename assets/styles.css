@@ -43,6 +43,9 @@
 
 html { scroll-behavior: smooth; }
 
+/* In-page anchors land below the 68px sticky nav, not under it. */
+[id] { scroll-margin-top: 84px; }
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -122,38 +125,7 @@ p { margin: 0 0 1em; }
 
 .btn-lg { padding: 16px 32px; font-size: 1.06rem; }
 
-/* ── App store links ─────────────────────────────────────────────── */
-.store-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
-.btn-store {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 170px;
-  padding: 10px 22px;
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-button);
-  background: hsl(var(--card));
-  color: hsl(var(--foreground));
-  line-height: 1.25;
-  transition: transform var(--duration-fast) var(--ease-out),
-              background-color var(--duration-base) var(--ease-out),
-              border-color var(--duration-base) var(--ease-out);
-}
-.btn-store:hover {
-  text-decoration: none;
-  background: hsl(var(--card-2));
-  border-color: hsl(var(--muted-fg));
-}
-.btn-store:active { transform: scale(0.97); }
-.store-kicker {
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: hsl(var(--muted-fg));
-}
-.store-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
-.store-links.center { justify-content: center; }
-@media (max-width: 430px) { .btn-store { flex: 1 1 100%; } }
+/* App store badges: see the store-badges block at the end of this file. */
 
 /* ── Sticky glass nav ────────────────────────────────────────────── */
 .nav {
@@ -226,11 +198,19 @@ p { margin: 0 0 1em; }
   border-bottom: 1px solid hsl(var(--border) / 0.4);
 }
 .mobile-menu a:hover { text-decoration: none; color: hsl(var(--primary)); }
-.mobile-menu .btn { margin-top: 16px; text-align: center; display: block; }
+.mobile-menu .btn {
+  margin-top: 16px; text-align: center; display: block;
+  /* `.mobile-menu a` would otherwise override the button's colour, weight and add a rule under it */
+  color: hsl(var(--primary-fg)); font-weight: 600; border-bottom: 1px solid transparent;
+}
+.mobile-menu .btn:hover { color: hsl(var(--primary-fg)); }
 
 /* ── Hero ────────────────────────────────────────────────────────── */
 .hero {
-  padding: 88px 0 72px;
+  /* Vertical only: the shorthand used to reset .container's side gutter to 0,
+     so below 1120px the headline sat flush against the screen edge. */
+  padding-top: 88px;
+  padding-bottom: 72px;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 56px;
@@ -281,24 +261,9 @@ p { margin: 0 0 1em; }
   align-items: center;
   padding: 44px 0;
 }
-.feature-row.flip .feature-copy { order: 2; }
 .feature-copy h3 { font-size: 1.5rem; }
 .feature-copy ul { padding-left: 1.2em; color: hsl(var(--muted-fg)); margin: 0; }
 .feature-copy li { margin-bottom: 6px; }
-
-/* ── Product photography ─────────────────────────────────────────── */
-.shot { margin: 0; max-width: 540px; margin-inline: auto; }
-.shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-3);
-}
-/* Stacked layout: keep the portrait shots from eating the whole screen. */
-@media (max-width: 900px) {
-  .shot { max-width: 400px; }
-}
 
 /* ── Stylized product mockups (pure CSS, generic data) ───────────── */
 .mock {
@@ -351,17 +316,6 @@ p { margin: 0 0 1em; }
 .dot-active { background: hsl(var(--status-active)); }
 .dot-complete { background: hsl(var(--status-complete)); }
 .dot-attention { background: hsl(var(--status-attention)); }
-
-.mock-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
-.mock-kpi {
-  background: hsl(var(--card-2));
-  border: 1px solid hsl(var(--border) / 0.6);
-  border-radius: var(--radius-input);
-  padding: 12px;
-}
-.mock-kpi .label { font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: hsl(var(--muted-fg)); }
-.mock-kpi .value { font-size: 1.25rem; font-weight: 700; margin-top: 2px; }
-.mock-kpi .value.orange { color: hsl(var(--primary)); }
 
 .mock-offline {
   display: flex; align-items: center; gap: 8px;
@@ -538,13 +492,15 @@ p { margin: 0 0 1em; }
 .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
 
 /* ── Scroll entrance (JS adds .in via IntersectionObserver) ──────── */
-.reveal {
+/* Gated on html.js (set by an inline script in <head>): if site.js fails to load,
+   content must stay visible rather than sit at opacity 0 forever. */
+.js .reveal {
   opacity: 0;
   transform: translateY(14px);
   transition: opacity var(--duration-slow) var(--ease-out),
               transform var(--duration-slow) var(--ease-out);
 }
-.reveal.in { opacity: 1; transform: none; }
+.js .reveal.in { opacity: 1; transform: none; }
 /* Stagger: cap at 8 children, +30ms each */
 .stagger > *:nth-child(1) { transition-delay: 0ms; }
 .stagger > *:nth-child(2) { transition-delay: 30ms; }
@@ -562,7 +518,7 @@ p { margin: 0 0 1em; }
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; transform: none; }
 }
 
 /* Legal pages */
@@ -654,9 +610,8 @@ p { margin: 0 0 1em; }
 
 /* ── Responsive: tablet 768 / phone 375 ──────────────────────────── */
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; gap: 40px; padding: 56px 0 48px; }
+  .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 56px; padding-bottom: 48px; }
   .feature-row { grid-template-columns: 1fr; gap: 28px; padding: 32px 0; }
-  .feature-row.flip .feature-copy { order: 0; }
   .grid-3, .trust { grid-template-columns: 1fr 1fr; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .nav-links, .nav-cta .btn-ghost { display: none; }
@@ -668,7 +623,665 @@ p { margin: 0 0 1em; }
   .section { padding: 52px 0; }
   .hero-ctas .btn { width: 100%; text-align: center; }
   .nav-cta .btn-primary { padding: 9px 14px; font-size: 0.85rem; }
-  .mock-kpis { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .mock-kpi { padding: 8px; }
-  .mock-kpi .value { font-size: 1rem; }
 }
+
+/* ── hero-shots ──────────────── */
+/* The hero's right column: the real product photo, framed. Height is tied to
+   the viewport so headline, CTA and photo share the first screen on a laptop. */
+.hero-shot {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  justify-self: center;
+  width: clamp(300px, calc((100vh - 240px) * 0.8), 440px);
+  width: clamp(300px, calc((100svh - 240px) * 0.8), 440px);
+  max-width: 100%;
+}
+/* Warm glow behind the phone. */
+.hero-shot::before {
+  content: "";
+  position: absolute;
+  inset: 8% 0 4%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, hsl(var(--primary) / 0.32), hsl(var(--primary) / 0.1) 55%, transparent);
+  filter: blur(36px);
+  pointer-events: none;
+}
+.hero-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1040 / 1300;
+  object-fit: cover;
+  object-position: 50% 0;
+  border-radius: 28px;
+  box-shadow:
+    0 0 0 1px hsl(var(--primary) / 0.22),
+    0 2px 6px hsl(222 40% 4% / 0.35),
+    0 24px 48px -12px hsl(222 40% 4% / 0.65),
+    0 48px 96px -24px hsl(222 40% 4% / 0.7);
+}
+/* Floating "glass" job card, echoing the photo's first row of Today. */
+.hero-chip {
+  position: absolute;
+  left: -28px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100% + 12px);
+  padding: 11px 14px;
+  border-radius: var(--radius-input);
+  background: hsl(var(--card) / 0.72);
+  border: 1px solid hsl(0 0% 100% / 0.1);
+  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(140%);
+  backdrop-filter: blur(var(--blur-glass)) saturate(140%);
+  box-shadow: 0 16px 36px -8px hsl(222 40% 4% / 0.7), inset 0 1px 0 hsl(0 0% 100% / 0.06);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+.hero-chip-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex: none;
+  background: hsl(var(--status-active));
+  box-shadow: 0 0 0 4px hsl(var(--status-active) / 0.2);
+}
+.hero-chip-text { display: flex; flex-direction: column; min-width: 0; }
+.hero-chip-title { font-weight: 600; color: hsl(var(--foreground)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hero-chip-sub { color: hsl(var(--muted-fg)); font-size: 0.72rem; white-space: nowrap; }
+.hero-chip .pill { flex: none; }
+
+@media (max-width: 900px) {
+  /* Stacked: crop the portrait to the dashboard's KPI cards so it doesn't push
+     the rest of the page a full screen down. */
+  .hero-shot { width: 400px; }
+  .hero-shot img { aspect-ratio: 1040 / 1120; border-radius: 24px; }
+  /* Straddle the bottom edge so the chip covers no dashboard numbers. */
+  .hero-shot { margin-bottom: 22px; }
+  .hero-chip { left: -20px; bottom: -22px; }
+}
+@media (max-width: 560px) {
+  .hero-shot { width: min(360px, 100%); }
+  /* Crop just below the "This month" card; the chip would only crowd here. */
+  .hero-shot { margin-bottom: 0; }
+  .hero-shot img { aspect-ratio: 1040 / 1060; border-radius: 22px; }
+  .hero-shot::before { inset: 6% 0 0; filter: blur(28px); }
+  .hero-chip { display: none; }
+}
+
+/* ── pricing ──────────────── */
+/* Monthly / Annual toggle — hidden unless JS is running (site.js drives it). */
+.billing-toggle-wrap { display: none; justify-content: center; margin: 0 0 30px; }
+html.js .billing-toggle-wrap { display: flex; }
+.billing-toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.8);
+  border-radius: 99px;
+  box-shadow: var(--shadow-1);
+}
+.billing-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: hsl(var(--muted-fg));
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out);
+}
+.billing-opt:hover { color: hsl(var(--foreground)); }
+.billing-opt[aria-pressed="true"] {
+  background: hsl(var(--card-2));
+  color: hsl(var(--foreground));
+  box-shadow: inset 0 0 0 1px hsl(var(--border)), var(--shadow-1);
+}
+.billing-opt:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+.billing-badge {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: hsl(var(--primary) / 0.16);
+  color: hsl(var(--primary));
+  white-space: nowrap;
+}
+
+/* Bands: equal height; the "included" line + CTA sit together at the bottom. */
+.bands { align-items: stretch; }
+.bands .band { height: 100%; }
+.band-price .band-amt { font-variant-numeric: tabular-nums; }
+.bands .band-annual { min-height: 1.3em; margin-bottom: 18px; }
+.band-incl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: auto 0 20px;
+  padding-top: 16px;
+  border-top: 1px solid hsl(var(--border) / 0.7);
+  font-size: 0.85rem;
+  color: hsl(var(--foreground) / 0.85);
+}
+.band-incl::before {
+  content: "";
+  flex: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: hsl(var(--status-complete) / 0.2)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346b37d' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 9px no-repeat;
+}
+.band-cta {
+  width: 100%;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 430px) {
+  .billing-opt { padding: 9px 14px; }
+}
+
+/* 404 — footer sits at the bottom of a short page. */
+body.page-404 { min-height: 100vh; display: flex; flex-direction: column; }
+body.page-404 main { flex: 1 0 auto; }
+/* ── icons ──────────────── */
+/* Inline Lucide line icons (stroke 1.75, currentColor) replacing emoji and text glyphs. */
+.trade-tile .icon {
+  width: 48px; height: 48px;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0;
+  background: hsl(var(--primary) / 0.12);
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary) / 0.18);
+  border-radius: 14px;
+}
+.trade-tile .icon svg { width: 24px; height: 24px; display: block; }
+
+.trust-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+  background: hsl(var(--primary) / 0.12);
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary) / 0.18);
+  border-radius: 12px;
+}
+.trust-icon svg { width: 22px; height: 22px; display: block; }
+
+.nav-toggle {
+  min-width: 44px; min-height: 44px;
+  padding: 0;
+  align-items: center; justify-content: center;
+  line-height: 0;
+}
+.nav-toggle svg { width: 22px; height: 22px; display: block; }
+.nav-toggle .icon-close { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+.nav-toggle:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-flex; }
+}
+/* The 44px tap target is wider than the old glyph button; tighten the phone nav's gaps so
+   wordmark + trial button + toggle still fit at 375 without horizontal scroll. */
+@media (max-width: 560px) {
+  .nav-inner { gap: 16px; }
+  .nav-cta { gap: 8px; }
+}
+
+.faq-q .chev { display: inline-flex; align-items: center; justify-content: center; line-height: 0; }
+.faq-q .chev svg { width: 18px; height: 18px; display: block; }
+@media (prefers-reduced-motion: reduce) {
+  .faq-q .chev { transition: none; }
+}
+
+/* ── store-badges ──────────────── */
+/* App Store / Google Play badges, drawn to the stores' badge proportions
+   (Apple 3:1, Google ~3.4:1): black badge, hairline light border, brand
+   glyph (simple-icons) + two-line wording. Applies to every .btn-store. */
+.store-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.store-links.center { justify-content: center; }
+.btn-store {
+  --badge-h: 44px;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  column-gap: 6px;
+  flex: 0 0 auto;
+  height: var(--badge-h);
+  padding: 0 12px 0 10px;
+  border: 1px solid hsl(0 0% 65%);
+  border-radius: calc(var(--badge-h) * 0.2);
+  background: #000;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+.btn-store-apple  { min-width: calc(var(--badge-h) * 3); }
+.btn-store-google { min-width: calc(var(--badge-h) * 3.375); }
+.btn-store:hover {
+  text-decoration: none;
+  border-color: #fff;
+  box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
+}
+.btn-store:active { transform: scale(0.97); }
+.store-glyph {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  width: calc(var(--badge-h) * 0.55);
+  height: calc(var(--badge-h) * 0.55);
+  fill: currentColor;
+}
+.btn-store-apple .store-glyph { margin-top: -2px; }
+.btn-store-google .store-glyph { width: calc(var(--badge-h) * 0.5); height: calc(var(--badge-h) * 0.5); }
+.store-kicker {
+  grid-column: 2;
+  font-size: calc(var(--badge-h) * 0.215);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #fff;
+}
+.btn-store-google .store-kicker {
+  font-size: calc(var(--badge-h) * 0.19);
+  letter-spacing: 0.05em;
+}
+.store-name {
+  grid-column: 2;
+  margin-top: 1px;
+  font-size: calc(var(--badge-h) * 0.37);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+/* Legacy markup without a glyph still reads as one text column. */
+.btn-store:not(:has(svg)) { grid-template-columns: auto; column-gap: 0; }
+.btn-store:not(:has(svg)) .store-kicker,
+.btn-store:not(:has(svg)) .store-name { grid-column: 1; }
+
+/* Hero CTA stack: one primary, a text link, then the badges at natural size. */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 26px;
+  margin-top: 30px;
+}
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 2px;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+.hero-link span { color: hsl(var(--primary)); transition: transform var(--duration-base) var(--ease-out); }
+.hero-link:hover { text-decoration: none; color: #fff; }
+.hero-link:hover span { transform: translateX(3px); }
+.hero-note { margin-top: 12px; }
+.hero-stores { margin-top: 26px; flex-wrap: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-link span, .btn-store { transition: none; }
+  .hero-link:hover span { transform: none; }
+  .btn-store:active { transform: none; }
+}
+@media (max-width: 560px) {
+  /* Undo the shared phone rule that stretched every hero button full width. */
+  .hero-ctas .btn { width: auto; }
+  .hero-ctas { gap: 4px 22px; }
+}
+@media (max-width: 359px) {
+  .btn-store { --badge-h: 40px; padding: 0 9px 0 8px; column-gap: 5px; }
+  .store-links { gap: 8px; }
+}
+/* The CTA band pads twice (band + container), so step its badges down on
+   phones to keep the pair on one row; below ~360px they stack, centred. */
+@media (max-width: 430px) {
+  .cta-band .btn-store { --badge-h: 40px; padding: 0 8px 0 7px; column-gap: 5px; }
+  .cta-band .store-links { gap: 8px; }
+}
+
+/* ── rhythm ──────────────────────────────────────────────────────── */
+/* Display type: heavier, tighter, balanced. Overrides the base h1/h2 above. */
+h1, h2 { font-weight: 800; text-wrap: balance; }
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+h2 {
+  font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.section-head p, .hero .lede { text-wrap: pretty; }
+.section-head .muted { font-size: 1.06rem; }
+
+/* One highlighted phrase per headline. Solid orange first, gradient where supported. */
+.hl { color: hsl(var(--primary)); }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hl {
+    background: linear-gradient(100deg, hsl(22 95% 56%) 0%, hsl(32 96% 62%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Nothing full-bleed may widen the page: clip (not hidden — no scroll container,
+   so sticky/anchors keep working) at <main>. */
+main { overflow-x: clip; }
+
+/* Hero glow: full-bleed layer behind the hero, faded out at the bottom. */
+.hero { position: relative; isolation: isolate; }
+.hero > * { min-width: 0; }
+.hero .lede { font-size: clamp(1.08rem, 1.4vw, 1.22rem); margin-top: 22px; }
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -68px;                       /* reach up under the glass nav */
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 42% 58% at 74% 38%, hsl(var(--primary) / 0.12), transparent 70%),
+    radial-gradient(ellipse 30% 40% at 12% 8%, hsl(var(--primary) / 0.07), transparent 70%),
+    linear-gradient(hsl(var(--foreground) / 0.028) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, hsl(var(--foreground) / 0.028) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+/* Chapters: every section gets full, even padding; alternate ones sit on a
+   slightly lifted surface with hairlines so the page reads in distinct parts. */
+.section.chapter,
+.section-tight.chapter { padding: clamp(72px, 9vw, 112px) 0; }
+.chapter-alt {
+  background: linear-gradient(180deg, hsl(222 27% 11.5%) 0%, hsl(222 28% 10.5%) 100%);
+  border-top: 1px solid hsl(var(--border) / 0.55);
+  border-bottom: 1px solid hsl(var(--border) / 0.55);
+}
+.section-tight.chapter.problem { padding: clamp(56px, 6vw, 80px) 0; }
+
+/* Problem strip: a pain point per card, marked with a short muted-red rule. */
+.problem .card {
+  position: relative;
+  background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(222 26% 12%) 100%);
+}
+.problem .card::before {
+  content: "";
+  display: block;
+  width: 32px; height: 3px;
+  border-radius: 3px;
+  background: hsl(8 70% 58% / 0.8);
+  margin-bottom: 18px;
+}
+.problem .card h3 { font-size: 1.15rem; letter-spacing: -0.015em; }
+
+/* How it works: larger numerals, a hairline joining the steps on wide screens. */
+.how .grid-3 { position: relative; }
+.how .card {
+  position: relative;
+  background: linear-gradient(180deg, hsl(var(--card-2)) 0%, hsl(var(--card)) 100%);
+  border-color: hsl(var(--border));
+}
+.how .step-num {
+  width: 48px; height: 48px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 14px;
+  background: hsl(var(--primary) / 0.14);
+  box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.35), 0 0 24px hsl(var(--primary) / 0.12);
+  margin-bottom: 18px;
+}
+@media (min-width: 901px) {
+  .how .grid-3::before {
+    content: "";
+    position: absolute;
+    top: 52px;                      /* card padding 28 + half the 48px numeral */
+    left: 12%; right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.35), transparent);
+    z-index: 0;
+  }
+  .how .card { z-index: 1; }
+}
+
+/* Final CTA: a stronger closing band with its own glow. */
+.cta-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(88px, 11vw, 136px) 24px;
+  background: hsl(222 28% 10.5%);
+  border-top: 1px solid hsl(var(--border) / 0.55);
+}
+.cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 70% at 50% 0%, hsl(var(--primary) / 0.12), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 110%, hsl(var(--primary) / 0.05), transparent 70%);
+}
+/* The alternating section above already draws the hairline. */
+.chapter-alt + .cta-band { border-top: 0; }
+.cta-band h2 { font-size: clamp(2.1rem, 5vw, 3.4rem); margin-bottom: 0.4em; }
+.cta-band .muted { font-size: 1.08rem; }
+
+/* Pricing page top section: same headline treatment and glow. */
+.page-hero { position: relative; isolation: isolate; overflow: clip; }
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 520px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 45% 70% at 50% 0%, hsl(var(--primary) / 0.12), transparent 70%);
+}
+.page-hero h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); }
+
+@media (max-width: 560px) {
+  .section.chapter,
+  .section-tight.chapter { padding: 64px 0; }
+  .section-tight.chapter.problem { padding: 48px 0; }
+  h1 { letter-spacing: -0.03em; }
+}
+
+/* ── features ──────────────── */
+/* Bento grid: 1 column on phones, 2 on tablets, 3 at ≥1024 where the two photo
+   tiles and the AI tile span two columns (rows: 2+1, 1+2, 1+2). */
+.bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.bento-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.7);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+/* A faint top sheen so tiles read as lit surfaces, not flat boxes. */
+.bento-tile::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, hsl(var(--foreground) / 0.035), transparent 40%);
+  pointer-events: none;
+}
+.bento-tile:hover {
+  transform: translateY(-2px);
+  border-color: hsl(var(--primary) / 0.35);
+  box-shadow: var(--shadow-2);
+}
+.bento-tile h3 { font-size: 1.2rem; line-height: 1.3; margin: 0 0 8px; text-wrap: balance; }
+.bento-tile p { margin: 0; color: hsl(var(--muted-fg)); font-size: 0.95rem; }
+.bento-tag {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+}
+.bento-list {
+  list-style: none;
+  margin: 14px 0 0; padding: 0;
+  display: grid; gap: 7px;
+  font-size: 0.92rem;
+  color: hsl(var(--foreground) / 0.88);
+}
+.bento-list li { position: relative; padding-left: 22px; }
+.bento-list li::before {
+  content: "";
+  position: absolute; left: 2px; top: 0.5em;
+  width: 11px; height: 6px;
+  border-left: 2px solid hsl(var(--primary));
+  border-bottom: 2px solid hsl(var(--primary));
+  transform: rotate(-45deg);
+}
+.bento-chips {
+  list-style: none;
+  margin: 16px 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.bento-chips li {
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: hsl(var(--foreground) / 0.9);
+  background: hsl(var(--card-2));
+  border: 1px solid hsl(var(--border) / 0.8);
+  border-radius: 999px;
+}
+/* Compact mock inside a tile: sits at the bottom, no second card frame. */
+.bento-mock { margin-top: auto; padding-top: 18px; }
+.bento-mock .mock-titlebar {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin-bottom: 10px;
+}
+.bento-mock .mock-row { padding: 10px 12px; margin-bottom: 8px; gap: 10px; }
+.bento-mock .mock-row:last-child { margin-bottom: 0; }
+.bento-mock .mock-row .name { font-size: 0.88rem; }
+.bento-mock .nowrap { white-space: nowrap; }
+
+/* Photo tiles: landscape crop of the portrait shots. */
+.bento-hero { padding: 0; }
+.bento-media { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; background: hsl(var(--card-2)); }
+.bento-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+.bento-media img.pos-estimate { object-position: 18% 52%; }
+.bento-media img.pos-tech { object-position: 50% 30%; }
+.bento-hero:hover .bento-media img { transform: scale(1.02); }
+.bento-hero .bento-copy { padding: 22px 24px 24px; }
+
+/* Phones: the single column is the long axis, so tighten it — shorter photo
+   crop, no redundant tag above each heading, and the invoice mock drops out
+   (its copy already carries every claim). */
+@media (max-width: 639px) {
+  .bento { gap: 12px; }
+  .bento-tile { padding: 20px; }
+  .bento-hero { padding: 0; }
+  .bento-hero .bento-copy { padding: 18px 20px 20px; }
+  .bento-media { aspect-ratio: 16 / 9; }
+  .bento-media img.pos-tech { object-position: 50% 16%; }
+  .bento-tag { display: none; }
+  .bento-mock.hide-phone { display: none; }
+}
+
+@media (min-width: 640px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .bento-hero {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+  .bento-media { aspect-ratio: auto; min-height: 300px; }
+  .bento-hero .bento-copy { padding: 28px; align-self: center; }
+}
+
+@media (min-width: 1024px) {
+  .bento { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .bento-tile { padding: 26px; }
+  .bento-hero { padding: 0; grid-template-columns: 5fr 6fr; }
+  .bento-media { min-height: 340px; }
+  .bento-hero .bento-copy { padding: 28px 30px; }
+  .bento-hero h3, .bento-wide h3 { font-size: 1.4rem; }
+  .bento-wide {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .bento-wide .bento-mock { margin-top: 0; padding-top: 0; }
+  .bento-wide {
+    background:
+      radial-gradient(120% 90% at 100% 50%, hsl(var(--primary) / 0.07), transparent 60%),
+      hsl(var(--card));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-tile:hover, .bento-hero:hover .bento-media img { transform: none; }
+}
+
+/* ── integration ──────────────── */
+/* Phone nav: the desktop <nav> is empty below 900px (its links are hidden) but still
+   took a flex gap; and at 320px wordmark + trial button + menu button do not fit.
+   The trial CTA stays reachable in the menu and as the hero's primary button. */
+@media (max-width: 900px) {
+  .nav-inner > nav { display: none; }
+}
+@media (max-width: 359px) {
+  .nav-cta .btn-primary { display: none; }
+}
+/* Hero chip: straddle the photo's bottom edge at every width (it used to sit on
+   top of the photo's own first job row on desktop, which read as a doubled line),
+   in the "paid" colour to match its content. */
+.hero-shot { margin-bottom: 22px; }
+.hero-chip { bottom: -22px; }
+.hero-chip-dot { background: hsl(var(--status-complete)); box-shadow: 0 0 0 4px hsl(var(--status-complete) / 0.2); }
+@media (max-width: 560px) { .hero-shot { margin-bottom: 0; } }

@@ -265,20 +265,6 @@ p { margin: 0 0 1em; }
 .feature-copy ul { padding-left: 1.2em; color: hsl(var(--muted-fg)); margin: 0; }
 .feature-copy li { margin-bottom: 6px; }
 
-/* ── Product photography ─────────────────────────────────────────── */
-.shot { margin: 0; max-width: 540px; margin-inline: auto; }
-.shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-3);
-}
-/* Stacked layout: keep the portrait shots from eating the whole screen. */
-@media (max-width: 900px) {
-  .shot { max-width: 400px; }
-}
-
 /* ── Stylized product mockups (pure CSS, generic data) ───────────── */
 .mock {
   background: hsl(var(--card));
@@ -1281,3 +1267,21 @@ main { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .bento-tile:hover, .bento-hero:hover .bento-media img { transform: none; }
 }
+
+/* ── integration ──────────────── */
+/* Phone nav: the desktop <nav> is empty below 900px (its links are hidden) but still
+   took a flex gap; and at 320px wordmark + trial button + menu button do not fit.
+   The trial CTA stays reachable in the menu and as the hero's primary button. */
+@media (max-width: 900px) {
+  .nav-inner > nav { display: none; }
+}
+@media (max-width: 359px) {
+  .nav-cta .btn-primary { display: none; }
+}
+/* Hero chip: straddle the photo's bottom edge at every width (it used to sit on
+   top of the photo's own first job row on desktop, which read as a doubled line),
+   in the "paid" colour to match its content. */
+.hero-shot { margin-bottom: 22px; }
+.hero-chip { bottom: -22px; }
+.hero-chip-dot { background: hsl(var(--status-complete)); box-shadow: 0 0 0 4px hsl(var(--status-complete) / 0.2); }
+@media (max-width: 560px) { .hero-shot { margin-bottom: 0; } }

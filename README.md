@@ -15,6 +15,12 @@ one stylesheet, one small JS file. Matches the Daybook app's design tokens
   and the price table in `/terms/` (which defers to `/pricing/`). Change all three together.
 - **Mockups** — the remaining CSS product mockups (`.mock` blocks) can be
   swapped for real app screenshots whenever you want.
+- **Store badges** — the App Store / Google Play badges are hand-built
+  approximations (inline SVG glyphs). Apple and Google ask for their official
+  badge artwork; swap it into the `.btn-store-apple` / `.btn-store-google` links
+  in `index.html` (keep each link's `aria-label`).
+- **Share image** — `assets/og-image.jpg` shows the dashboard photo's sample
+  data. Re-render it if that photo changes.
 - **Scroll reveal** — `.reveal` only hides content when `<html>` has the `js`
   class, set by an inline script in each page's `<head>`. A new page that uses
   `.reveal` needs that one-line script too.

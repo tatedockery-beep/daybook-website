@@ -1285,3 +1285,21 @@ main { overflow-x: clip; }
 .hero-chip { bottom: -22px; }
 .hero-chip-dot { background: hsl(var(--status-complete)); box-shadow: 0 0 0 4px hsl(var(--status-complete) / 0.2); }
 @media (max-width: 560px) { .hero-shot { margin-bottom: 0; } }
+
+/* ── official store badges ──────────────── */
+/* Apple's official "Download on the App Store" artwork (assets/badges/app-store.svg,
+   from developer.apple.com — Download_on_the_App_Store_Badge_US-UK_RGB_blk). It
+   carries its own black fill, grey hairline and corners, so the link drops the
+   hand-built badge chrome and only sizes it. Do not recolour or edit the SVG. */
+.btn-store.btn-store-official {
+  display: inline-block;
+  height: var(--badge-h);
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+}
+.btn-store.btn-store-official img { height: 100%; width: auto; display: block; }
+.btn-store.btn-store-official:hover { box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35); }
+

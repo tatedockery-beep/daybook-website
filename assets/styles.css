@@ -887,39 +887,6 @@ body.page-404 main { flex: 1 0 auto; }
   box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
 }
 .btn-store:active { transform: scale(0.97); }
-.store-glyph {
-  grid-row: 1 / span 2;
-  grid-column: 1;
-  width: calc(var(--badge-h) * 0.55);
-  height: calc(var(--badge-h) * 0.55);
-  fill: currentColor;
-}
-.btn-store-apple .store-glyph { margin-top: -2px; }
-.btn-store-google .store-glyph { width: calc(var(--badge-h) * 0.5); height: calc(var(--badge-h) * 0.5); }
-.store-kicker {
-  grid-column: 2;
-  font-size: calc(var(--badge-h) * 0.215);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  text-transform: none;
-  color: #fff;
-}
-.btn-store-google .store-kicker {
-  font-size: calc(var(--badge-h) * 0.19);
-  letter-spacing: 0.05em;
-}
-.store-name {
-  grid-column: 2;
-  margin-top: 1px;
-  font-size: calc(var(--badge-h) * 0.37);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-/* Legacy markup without a glyph still reads as one text column. */
-.btn-store:not(:has(svg)) { grid-template-columns: auto; column-gap: 0; }
-.btn-store:not(:has(svg)) .store-kicker,
-.btn-store:not(:has(svg)) .store-name { grid-column: 1; }
-
 /* Hero CTA stack: one primary, a text link, then the badges at natural size. */
 .hero-ctas {
   display: flex;
@@ -1285,3 +1252,25 @@ main { overflow-x: clip; }
 .hero-chip { bottom: -22px; }
 .hero-chip-dot { background: hsl(var(--status-complete)); box-shadow: 0 0 0 4px hsl(var(--status-complete) / 0.2); }
 @media (max-width: 560px) { .hero-shot { margin-bottom: 0; } }
+
+/* ── official store badges ──────────────── */
+/* Official store artwork, self-hosted and unmodified:
+   - assets/badges/app-store.svg — Apple's "Download on the App Store" (from
+     developer.apple.com, Download_on_the_App_Store_Badge_US-UK_RGB_blk).
+   - assets/badges/google-play.png — Google's "Get it on Google Play" (from
+     play.google.com/intl/en_us/badges), with only its transparent margin cropped.
+   Each carries its own black fill, grey hairline and corners, so the link drops the
+   hand-built badge chrome and only sizes it; both share one height. Do not recolour
+   or redraw them. */
+.btn-store.btn-store-official {
+  display: inline-block;
+  height: var(--badge-h);
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+}
+.btn-store.btn-store-official img { height: 100%; width: auto; display: block; }
+.btn-store.btn-store-official:hover { box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35); }
+

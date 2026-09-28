@@ -685,3 +685,155 @@ p { margin: 0 0 1em; }
   .mock-kpi { padding: 8px; }
   .mock-kpi .value { font-size: 1rem; }
 }
+
+/* ── rhythm ──────────────────────────────────────────────────────── */
+/* Display type: heavier, tighter, balanced. Overrides the base h1/h2 above. */
+h1, h2 { font-weight: 800; text-wrap: balance; }
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+h2 {
+  font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.section-head p, .hero .lede { text-wrap: pretty; }
+.section-head .muted { font-size: 1.06rem; }
+
+/* One highlighted phrase per headline. Solid orange first, gradient where supported. */
+.hl { color: hsl(var(--primary)); }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hl {
+    background: linear-gradient(100deg, hsl(22 95% 56%) 0%, hsl(32 96% 62%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Nothing full-bleed may widen the page: clip (not hidden — no scroll container,
+   so sticky/anchors keep working) at <main>. */
+main { overflow-x: clip; }
+
+/* Hero glow: full-bleed layer behind the hero, faded out at the bottom. */
+.hero { position: relative; isolation: isolate; }
+.hero > * { min-width: 0; }
+.hero .lede { font-size: clamp(1.08rem, 1.4vw, 1.22rem); margin-top: 22px; }
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -68px;                       /* reach up under the glass nav */
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 42% 58% at 74% 38%, hsl(var(--primary) / 0.12), transparent 70%),
+    radial-gradient(ellipse 30% 40% at 12% 8%, hsl(var(--primary) / 0.07), transparent 70%),
+    linear-gradient(hsl(var(--foreground) / 0.028) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, hsl(var(--foreground) / 0.028) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+/* Chapters: every section gets full, even padding; alternate ones sit on a
+   slightly lifted surface with hairlines so the page reads in distinct parts. */
+.section.chapter,
+.section-tight.chapter { padding: clamp(72px, 9vw, 112px) 0; }
+.chapter-alt {
+  background: linear-gradient(180deg, hsl(222 27% 11.5%) 0%, hsl(222 28% 10.5%) 100%);
+  border-top: 1px solid hsl(var(--border) / 0.55);
+  border-bottom: 1px solid hsl(var(--border) / 0.55);
+}
+.section-tight.chapter.problem { padding: clamp(56px, 6vw, 80px) 0; }
+
+/* Problem strip: a pain point per card, marked with a short muted-red rule. */
+.problem .card {
+  position: relative;
+  background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(222 26% 12%) 100%);
+}
+.problem .card::before {
+  content: "";
+  display: block;
+  width: 32px; height: 3px;
+  border-radius: 3px;
+  background: hsl(8 70% 58% / 0.8);
+  margin-bottom: 18px;
+}
+.problem .card h3 { font-size: 1.15rem; letter-spacing: -0.015em; }
+
+/* How it works: larger numerals, a hairline joining the steps on wide screens. */
+.how .grid-3 { position: relative; }
+.how .card {
+  position: relative;
+  background: linear-gradient(180deg, hsl(var(--card-2)) 0%, hsl(var(--card)) 100%);
+  border-color: hsl(var(--border));
+}
+.how .step-num {
+  width: 48px; height: 48px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 14px;
+  background: hsl(var(--primary) / 0.14);
+  box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.35), 0 0 24px hsl(var(--primary) / 0.12);
+  margin-bottom: 18px;
+}
+@media (min-width: 901px) {
+  .how .grid-3::before {
+    content: "";
+    position: absolute;
+    top: 52px;                      /* card padding 28 + half the 48px numeral */
+    left: 12%; right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.35), transparent);
+    z-index: 0;
+  }
+  .how .card { z-index: 1; }
+}
+
+/* Final CTA: a stronger closing band with its own glow. */
+.cta-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(88px, 11vw, 136px) 24px;
+  background: hsl(222 28% 10.5%);
+  border-top: 1px solid hsl(var(--border) / 0.55);
+}
+.cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 70% at 50% 0%, hsl(var(--primary) / 0.12), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 110%, hsl(var(--primary) / 0.05), transparent 70%);
+}
+/* The alternating section above already draws the hairline. */
+.chapter-alt + .cta-band { border-top: 0; }
+.cta-band h2 { font-size: clamp(2.1rem, 5vw, 3.4rem); margin-bottom: 0.4em; }
+.cta-band .muted { font-size: 1.08rem; }
+
+/* Pricing page top section: same headline treatment and glow. */
+.page-hero { position: relative; isolation: isolate; overflow: clip; }
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 520px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 45% 70% at 50% 0%, hsl(var(--primary) / 0.12), transparent 70%);
+}
+.page-hero h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); }
+
+@media (max-width: 560px) {
+  .section.chapter,
+  .section-tight.chapter { padding: 64px 0; }
+  .section-tight.chapter.problem { padding: 48px 0; }
+  h1 { letter-spacing: -0.03em; }
+}

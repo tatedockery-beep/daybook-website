@@ -685,3 +685,55 @@ p { margin: 0 0 1em; }
   .mock-kpi { padding: 8px; }
   .mock-kpi .value { font-size: 1rem; }
 }
+
+/* ── icons ──────────────── */
+/* Inline Lucide line icons (stroke 1.75, currentColor) replacing emoji and text glyphs. */
+.trade-tile .icon {
+  width: 48px; height: 48px;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0;
+  background: hsl(var(--primary) / 0.12);
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary) / 0.18);
+  border-radius: 14px;
+}
+.trade-tile .icon svg { width: 24px; height: 24px; display: block; }
+
+.trust-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+  background: hsl(var(--primary) / 0.12);
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary) / 0.18);
+  border-radius: 12px;
+}
+.trust-icon svg { width: 22px; height: 22px; display: block; }
+
+.nav-toggle {
+  min-width: 44px; min-height: 44px;
+  padding: 0;
+  align-items: center; justify-content: center;
+  line-height: 0;
+}
+.nav-toggle svg { width: 22px; height: 22px; display: block; }
+.nav-toggle .icon-close { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+.nav-toggle:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-flex; }
+}
+/* The 44px tap target is wider than the old glyph button; tighten the phone nav's gaps so
+   wordmark + trial button + toggle still fit at 375 without horizontal scroll. */
+@media (max-width: 560px) {
+  .nav-inner { gap: 16px; }
+  .nav-cta { gap: 8px; }
+}
+
+.faq-q .chev { display: inline-flex; align-items: center; justify-content: center; line-height: 0; }
+.faq-q .chev svg { width: 18px; height: 18px; display: block; }
+@media (prefers-reduced-motion: reduce) {
+  .faq-q .chev { transition: none; }
+}

@@ -125,38 +125,7 @@ p { margin: 0 0 1em; }
 
 .btn-lg { padding: 16px 32px; font-size: 1.06rem; }
 
-/* ── App store links ─────────────────────────────────────────────── */
-.store-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
-.btn-store {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 170px;
-  padding: 10px 22px;
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-button);
-  background: hsl(var(--card));
-  color: hsl(var(--foreground));
-  line-height: 1.25;
-  transition: transform var(--duration-fast) var(--ease-out),
-              background-color var(--duration-base) var(--ease-out),
-              border-color var(--duration-base) var(--ease-out);
-}
-.btn-store:hover {
-  text-decoration: none;
-  background: hsl(var(--card-2));
-  border-color: hsl(var(--muted-fg));
-}
-.btn-store:active { transform: scale(0.97); }
-.store-kicker {
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: hsl(var(--muted-fg));
-}
-.store-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
-.store-links.center { justify-content: center; }
-@media (max-width: 430px) { .btn-store { flex: 1 1 100%; } }
+/* App store badges: see the store-badges block at the end of this file. */
 
 /* ── Sticky glass nav ────────────────────────────────────────────── */
 .nav {
@@ -891,4 +860,120 @@ body.page-404 main { flex: 1 0 auto; }
 .faq-q .chev svg { width: 18px; height: 18px; display: block; }
 @media (prefers-reduced-motion: reduce) {
   .faq-q .chev { transition: none; }
+}
+
+/* ── store-badges ──────────────── */
+/* App Store / Google Play badges, drawn to the stores' badge proportions
+   (Apple 3:1, Google ~3.4:1): black badge, hairline light border, brand
+   glyph (simple-icons) + two-line wording. Applies to every .btn-store. */
+.store-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.store-links.center { justify-content: center; }
+.btn-store {
+  --badge-h: 44px;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  column-gap: 6px;
+  flex: 0 0 auto;
+  height: var(--badge-h);
+  padding: 0 12px 0 10px;
+  border: 1px solid hsl(0 0% 65%);
+  border-radius: calc(var(--badge-h) * 0.2);
+  background: #000;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+.btn-store-apple  { min-width: calc(var(--badge-h) * 3); }
+.btn-store-google { min-width: calc(var(--badge-h) * 3.375); }
+.btn-store:hover {
+  text-decoration: none;
+  border-color: #fff;
+  box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
+}
+.btn-store:active { transform: scale(0.97); }
+.store-glyph {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  width: calc(var(--badge-h) * 0.55);
+  height: calc(var(--badge-h) * 0.55);
+  fill: currentColor;
+}
+.btn-store-apple .store-glyph { margin-top: -2px; }
+.btn-store-google .store-glyph { width: calc(var(--badge-h) * 0.5); height: calc(var(--badge-h) * 0.5); }
+.store-kicker {
+  grid-column: 2;
+  font-size: calc(var(--badge-h) * 0.215);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #fff;
+}
+.btn-store-google .store-kicker {
+  font-size: calc(var(--badge-h) * 0.19);
+  letter-spacing: 0.05em;
+}
+.store-name {
+  grid-column: 2;
+  margin-top: 1px;
+  font-size: calc(var(--badge-h) * 0.37);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+/* Legacy markup without a glyph still reads as one text column. */
+.btn-store:not(:has(svg)) { grid-template-columns: auto; column-gap: 0; }
+.btn-store:not(:has(svg)) .store-kicker,
+.btn-store:not(:has(svg)) .store-name { grid-column: 1; }
+
+/* Hero CTA stack: one primary, a text link, then the badges at natural size. */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 26px;
+  margin-top: 30px;
+}
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 2px;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+.hero-link span { color: hsl(var(--primary)); transition: transform var(--duration-base) var(--ease-out); }
+.hero-link:hover { text-decoration: none; color: #fff; }
+.hero-link:hover span { transform: translateX(3px); }
+.hero-note { margin-top: 12px; }
+.hero-stores { margin-top: 26px; flex-wrap: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-link span, .btn-store { transition: none; }
+  .hero-link:hover span { transform: none; }
+  .btn-store:active { transform: none; }
+}
+@media (max-width: 560px) {
+  /* Undo the shared phone rule that stretched every hero button full width. */
+  .hero-ctas .btn { width: auto; }
+  .hero-ctas { gap: 4px 22px; }
+}
+@media (max-width: 359px) {
+  .btn-store { --badge-h: 40px; padding: 0 9px 0 8px; column-gap: 5px; }
+  .store-links { gap: 8px; }
+}
+/* The CTA band pads twice (band + container), so step its badges down on
+   phones to keep the pair on one row; below ~360px they stack, centred. */
+@media (max-width: 430px) {
+  .cta-band .btn-store { --badge-h: 40px; padding: 0 8px 0 7px; column-gap: 5px; }
+  .cta-band .store-links { gap: 8px; }
 }

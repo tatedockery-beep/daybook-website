@@ -110,6 +110,115 @@ if (!reduced && 'IntersectionObserver' in window) {
   });
 })();
 
+// Visit statistics — Daybook's own, no third party.
+//
+// For each page: one small "viewed" report, then how long the page was actually
+// VISIBLE (a background tab doesn't count), sent to Daybook's own API with
+// navigator.sendBeacon. What is sent: a random visit id, the page path (never its
+// query string), the NAME of the site that linked here (never that page's
+// address), and any campaign tags on the link. No cookie, no fingerprint, nothing
+// about the device. The visit id lives in this tab's sessionStorage and is gone
+// when the tab closes. See /privacy/ section 12.
+//
+// The visit id also rides on the "Start free trial" link as `vid`, so a signup can
+// be matched to the visit that led to it. That parameter name is a contract with
+// the app: Contractor-OS apps/web/src/lib/signup-attribution.ts reads it, and
+// apps/api/src/routes/site.ts receives the reports.
+//
+// Off when the browser asks not to be tracked (Global Privacy Control or Do Not
+// Track), for automated browsers, and anywhere but usedaybook.com itself, so a
+// local preview never pollutes the numbers.
+(() => {
+  const ENDPOINT = 'https://api.usedaybook.com/api/v1/site/events';
+  const VISIT_KEY = 'daybook.visit-id';
+  const SIGNUP = 'https://app.usedaybook.com/register';
+  const TAGS = [
+    ['utm_source', 'utmSource'],
+    ['utm_medium', 'utmMedium'],
+    ['utm_campaign', 'utmCampaign'],
+    ['utm_content', 'utmContent'],
+    ['utm_term', 'utmTerm'],
+  ];
+
+  const live = location.hostname === 'usedaybook.com' || location.hostname === 'www.usedaybook.com';
+  const optedOut = navigator.globalPrivacyControl === true || navigator.doNotTrack === '1' || window.doNotTrack === '1';
+  if (!live || optedOut || navigator.webdriver) return;
+
+  const uuid = () => {
+    if (window.crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    const b = crypto.getRandomValues(new Uint8Array(16));
+    b[6] = (b[6] & 0x0f) | 0x40;
+    b[8] = (b[8] & 0x3f) | 0x80;
+    const h = [...b].map((x) => x.toString(16).padStart(2, '0')).join('');
+    return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+  };
+
+  let visitId = null;
+  try { visitId = sessionStorage.getItem(VISIT_KEY); } catch (e) { /* storage blocked */ }
+  if (!visitId || !/^[0-9a-f-]{36}$/i.test(visitId)) {
+    visitId = uuid();
+    try { sessionStorage.setItem(VISIT_KEY, visitId); } catch (e) { /* one-page visit, then */ }
+  }
+  const pageViewId = uuid();
+
+  const send = (event) => {
+    const body = JSON.stringify(event);
+    // A string body goes as text/plain: a "simple" request, so no CORS preflight.
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, body)) return;
+    } catch (e) { /* fall through */ }
+    try {
+      fetch(ENDPOINT, { method: 'POST', body, keepalive: true, mode: 'no-cors', headers: { 'Content-Type': 'text/plain' } });
+    } catch (e) { /* statistics are never worth an error */ }
+  };
+
+  const view = { type: 'view', id: pageViewId, visitId, path: location.pathname };
+  try {
+    const host = document.referrer ? new URL(document.referrer).hostname : '';
+    if (host && host !== location.hostname && !host.endsWith('.usedaybook.com') && host !== 'usedaybook.com') view.referrer = host;
+  } catch (e) { /* no usable referrer */ }
+  const params = new URLSearchParams(location.search);
+  TAGS.forEach(([param, field]) => {
+    const value = (params.get(param) || '').trim();
+    if (value) view[field] = value.slice(0, 200);
+  });
+  send(view);
+
+  // Visible time: count only while the page is on screen, and report the running
+  // total each time it is hidden (switching tabs, locking the phone, leaving). The
+  // API keeps the largest total it has seen, so repeats and late arrivals are safe.
+  let visibleMs = 0;
+  let shownAt = document.visibilityState === 'visible' ? performance.now() : null;
+  let reported = 0;
+  const report = () => {
+    if (shownAt !== null) {
+      visibleMs += performance.now() - shownAt;
+      shownAt = null;
+    }
+    const seconds = Math.floor(visibleMs / 1000);
+    if (seconds > reported) {
+      reported = seconds;
+      send({ type: 'time', id: pageViewId, seconds });
+    }
+  };
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') report();
+    else if (shownAt === null) shownAt = performance.now();
+  });
+  window.addEventListener('pagehide', report);
+  // Back/forward cache: a restored page is the same page view, visible again.
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted && shownAt === null && document.visibilityState === 'visible') shownAt = performance.now();
+  });
+
+  // Carry the visit to the signup page.
+  document.querySelectorAll(`a[href^="${SIGNUP}"]`).forEach((link) => {
+    const url = new URL(link.href);
+    url.searchParams.set('vid', visitId);
+    link.href = url.toString();
+  });
+})();
+
 // ── Pricing: monthly / annual toggle ───────────────────────────────────
 //
 // Prices live on each band as data-price-monthly / data-price-annual (whole

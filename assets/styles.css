@@ -857,6 +857,85 @@ p { margin: 0 0 1em; }
   .video-modal-close { top: -46px; right: 0; }
 }
 
+/* ── Built in America ──────────── */
+/* A full-bleed band: the shop-and-flag photo behind a very large line of
+   type. The photo is darkened from the left so the words carry, and from the
+   bottom so the band seats onto the pricing section below it. */
+.america {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(104px, 15vw, 200px) 0;
+  background: hsl(222 40% 4%);
+  border-top: 1px solid hsl(var(--border) / 0.5);
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+}
+.america-bg,
+.america-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: -2;
+}
+.america-bg img { object-fit: cover; object-position: 62% 50%; }
+.america::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, hsl(222 40% 4% / 0.92) 0%, hsl(222 40% 4% / 0.78) 38%, hsl(222 40% 4% / 0.35) 70%, hsl(222 40% 4% / 0.2) 100%),
+    linear-gradient(to top, hsl(222 40% 4% / 0.9) 0%, transparent 32%),
+    linear-gradient(to bottom, hsl(222 40% 4% / 0.55) 0%, transparent 28%);
+}
+.america-inner { max-width: 1100px; }
+.america-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: hsl(var(--card) / 0.85);
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+}
+.america-flag { flex: none; border-radius: 3px; box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.15); }
+.america-title {
+  margin: 0;
+  font-size: clamp(2.6rem, 7.2vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 24px hsl(222 40% 4% / 0.6);
+  max-width: 12ch;
+}
+.america-title .hl { color: hsl(var(--primary)); }
+.america-sub {
+  margin: 26px 0 0;
+  max-width: 36rem;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  color: hsl(218 20% 84%);
+}
+@media (max-width: 700px) {
+  .america { padding: 88px 0; }
+  .america-title { max-width: none; }
+  .america::before {
+    background:
+      linear-gradient(to right, hsl(222 40% 4% / 0.9) 0%, hsl(222 40% 4% / 0.72) 60%, hsl(222 40% 4% / 0.5) 100%),
+      linear-gradient(to top, hsl(222 40% 4% / 0.9) 0%, transparent 32%);
+  }
+  .america-sub { font-size: 1.02rem; }
+}
+
 /* ── pricing ──────────────── */
 /* Monthly / Annual toggle — hidden unless JS is running (site.js drives it). */
 .billing-toggle-wrap { display: none; justify-content: center; margin: 0 0 30px; }

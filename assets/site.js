@@ -265,3 +265,27 @@ if (!reduced && 'IntersectionObserver' in window) {
     buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.billing)));
   });
 })();
+
+// ── Hero video lightbox ───────────────────────────────────────────
+// The poster is a plain link to the file; with JS it opens the <dialog>
+// player instead, plays with sound (the click is the user gesture), and
+// pauses when the dialog closes by Esc, the close button, or the backdrop.
+(() => {
+  const openers = document.querySelectorAll('[data-video-open]');
+  if (!openers.length) return;
+  openers.forEach((a) => {
+    const dialog = document.getElementById(a.dataset.videoOpen);
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+    const video = dialog.querySelector('video');
+    const stop = () => { if (video) video.pause(); };
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.showModal();
+      if (video) video.play().catch(() => {});
+    });
+    dialog.addEventListener('close', stop);
+    dialog.addEventListener('cancel', stop);
+    dialog.querySelectorAll('[data-video-close]').forEach((b) => b.addEventListener('click', () => dialog.close()));
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  });
+})();
